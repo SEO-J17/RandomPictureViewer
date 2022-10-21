@@ -1,14 +1,13 @@
 package project.seo.pictureviewer
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import project.seo.pictureviewer.data.MainPicture
+import project.seo.pictureviewer.data.PictureData
 import project.seo.pictureviewer.databinding.ListItemBinding
 
-class ListAdapter(private val dataSet: MutableList<MainPicture>) :
+class ListAdapter(private val dataSet: MutableList<PictureData>) :
     RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
     class ListViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -21,7 +20,7 @@ class ListAdapter(private val dataSet: MutableList<MainPicture>) :
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         with(dataSet[position]) {
             holder.binding.author.text = author
-            holder.binding.pictures.load(url)
+            holder.binding.pictures.load(imageUrl)
         }
     }
 

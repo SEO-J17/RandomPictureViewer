@@ -1,6 +1,5 @@
 package project.seo.pictureviewer.network
 
-import project.seo.pictureviewer.data.MainPicture
 import project.seo.pictureviewer.data.PictureInfo
 import retrofit2.Call
 import retrofit2.http.GET
