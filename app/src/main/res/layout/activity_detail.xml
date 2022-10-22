@@ -9,11 +9,12 @@
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:orientation="vertical"
         app:layout_constraintVertical_weight="1">
 
         <ImageView
+            android:padding="8dp"
             android:id="@+id/detailImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -33,87 +34,71 @@
 
         <TextView
             android:id="@+id/idView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MainTitleStyle"
             android:text="ID"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/idValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="15sp" />
+            style="@style/MainValueStyle"
+            android:text="0" />
 
         <TextView
             android:id="@+id/authorView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MainTitleStyle"
             android:text="작가"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/authorValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="15sp" />
+            style="@style/MainValueStyle"
+            android:text="0" />
 
         <TextView
             android:id="@+id/widthView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="너비"
-            android:textSize="20sp" />
+            style="@style/MainTitleStyle"
+            android:text="너비" />
 
         <TextView
             android:id="@+id/widthValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="15sp" />
+            style="@style/MainValueStyle"
+            android:text="0" />
 
         <TextView
             android:id="@+id/heightView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MainTitleStyle"
             android:text="높이"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/heightValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="15sp" />
+            style="@style/MainValueStyle"
+            android:text="0" />
 
         <TextView
             android:id="@+id/urlView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MainTitleStyle"
             android:text="사이트"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/urlValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MainValueStyle"
             android:text="0"
-            android:textSize="15sp" />
+            android:textColor="#0100FF"
+            android:textStyle="bold|italic" />
 
         <TextView
             android:id="@+id/downloadView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="다운로드"
-            android:textSize="20sp" />
+            style="@style/MainTitleStyle"
+            android:text="다운로드" />
 
         <TextView
             android:id="@+id/downloadValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MainValueStyle"
             android:text="0"
-            android:textSize="15sp" />
+            android:textColor="#0100FF"
+            android:textStyle="bold|italic" />
 
 
     </LinearLayout>
