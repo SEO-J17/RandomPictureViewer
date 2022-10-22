@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -14,17 +15,17 @@
         app:layout_constraintVertical_weight="1">
 
         <ImageView
-            android:padding="8dp"
             android:id="@+id/detailImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="8dp"
             android:scaleType="centerInside"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
@@ -36,72 +37,109 @@
             android:id="@+id/idView"
             style="@style/MainTitleStyle"
             android:text="ID"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/idValue"
             style="@style/MainValueStyle"
-            android:text="0" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="0"
+            app:layout_constraintBottom_toBottomOf="@+id/idView"
+            app:layout_constraintStart_toEndOf="@+id/idView"
+            app:layout_constraintTop_toTopOf="@+id/idView" />
 
         <TextView
             android:id="@+id/authorView"
             style="@style/MainTitleStyle"
             android:text="작가"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/idView" />
 
         <TextView
             android:id="@+id/authorValue"
             style="@style/MainValueStyle"
-            android:text="0" />
+            android:layout_marginStart="10dp"
+            android:text="0"
+            app:layout_constraintBottom_toBottomOf="@+id/authorView"
+            app:layout_constraintStart_toEndOf="@id/authorView"
+            app:layout_constraintTop_toTopOf="@+id/authorView" />
 
         <TextView
             android:id="@+id/widthView"
             style="@style/MainTitleStyle"
-            android:text="너비" />
+            android:text="너비"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/authorView" />
 
         <TextView
             android:id="@+id/widthValue"
             style="@style/MainValueStyle"
-            android:text="0" />
+            android:layout_marginStart="10dp"
+            android:text="0"
+            app:layout_constraintBottom_toBottomOf="@+id/widthView"
+            app:layout_constraintStart_toEndOf="@id/widthView"
+            app:layout_constraintTop_toTopOf="@+id/widthView" />
 
         <TextView
             android:id="@+id/heightView"
             style="@style/MainTitleStyle"
             android:text="높이"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/widthView" />
 
         <TextView
             android:id="@+id/heightValue"
             style="@style/MainValueStyle"
-            android:text="0" />
+            android:layout_marginStart="10dp"
+            android:text="0"
+            app:layout_constraintBottom_toBottomOf="@+id/heightView"
+            app:layout_constraintStart_toEndOf="@id/heightView"
+            app:layout_constraintTop_toTopOf="@+id/heightView" />
 
         <TextView
             android:id="@+id/urlView"
             style="@style/MainTitleStyle"
             android:text="사이트"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/heightView" />
 
         <TextView
             android:id="@+id/urlValue"
             style="@style/MainValueStyle"
+            android:layout_marginStart="10dp"
             android:text="0"
             android:textColor="#0100FF"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toBottomOf="@+id/urlView"
+            app:layout_constraintStart_toEndOf="@+id/urlView"
+            app:layout_constraintTop_toTopOf="@+id/urlView" />
 
         <TextView
             android:id="@+id/downloadView"
             style="@style/MainTitleStyle"
-            android:text="다운로드" />
+            android:text="다운로드"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/urlView" />
 
         <TextView
             android:id="@+id/downloadValue"
             style="@style/MainValueStyle"
+            android:layout_marginStart="10dp"
             android:text="0"
             android:textColor="#0100FF"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toBottomOf="@id/downloadView"
+            app:layout_constraintStart_toEndOf="@id/downloadView"
+            app:layout_constraintTop_toTopOf="@id/downloadView" />
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>

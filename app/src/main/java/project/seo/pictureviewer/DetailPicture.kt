@@ -3,7 +3,6 @@ package project.seo.pictureviewer
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.util.Linkify
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import project.seo.pictureviewer.data.PictureData
