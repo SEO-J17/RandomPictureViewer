@@ -34,10 +34,10 @@ class MainActivity : AppCompatActivity() {
         val api = retrofit.create(PicturesAPI::class.java)
 
 
-        //TODO: 로딩바 추가하기
         api.getPicture(1, 100).enqueue(object : Callback<PictureInfo> {
             override fun onResponse(call: Call<PictureInfo>, response: Response<PictureInfo>) {
                 if (response.isSuccessful) {
+                    binding.loadingBar.visibility = View.GONE
                     dataSet = QueryUtils.extractData(response.body())
                     val recyclerAdapter = ListAdapter(dataSet)
                     recyclerView.adapter = recyclerAdapter

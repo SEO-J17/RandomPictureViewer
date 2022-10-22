@@ -3,7 +3,6 @@ package project.seo.pictureviewer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import project.seo.pictureviewer.data.PictureData
@@ -16,7 +15,7 @@ class ListAdapter(private val dataSet: MutableList<PictureData>) :
     interface OnItemClickListener {
         fun onClick(view: View, position: Int)
     }
-    
+
     //외부에서 클릭시 이벤트 설정
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
