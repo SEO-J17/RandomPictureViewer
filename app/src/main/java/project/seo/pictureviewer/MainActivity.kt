@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import project.seo.pictureviewer.data.PictureData
 import project.seo.pictureviewer.data.PictureInfo
 import project.seo.pictureviewer.databinding.ActivityMainBinding
 import project.seo.pictureviewer.network.PicturesAPI
@@ -26,13 +25,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         val recyclerView = binding.recyclerView
 
-
         recyclerView.layoutManager =
             LinearLayoutManager(this)
         val retrofit = Retrofit.Builder().baseUrl(requestUrl).addConverterFactory(
             GsonConverterFactory.create()).build()
         val api = retrofit.create(PicturesAPI::class.java)
-
 
         api.getPicture(1, 100).enqueue(object : Callback<PictureInfo> {
             override fun onResponse(call: Call<PictureInfo>, response: Response<PictureInfo>) {

@@ -31,7 +31,8 @@
         android:layout_weight="2"
         android:orientation="vertical"
         android:paddingStart="8dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:paddingEnd="8dp">
 
         <TextView
             android:id="@+id/idView"
@@ -57,6 +58,7 @@
             style="@style/MainTitleStyle"
             android:text="작가"
             android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idView" />
 
         <TextView
@@ -139,22 +141,60 @@
             app:layout_constraintTop_toTopOf="@id/downloadView" />
 
         <ImageView
-            android:id="@+id/nextPicture"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="15dp"
-            android:src="@drawable/next_arrow"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:id="@+id/previousPicture"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/noimage"
+            app:layout_constraintEnd_toStartOf="@+id/currentPicture"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/downloadView" />
 
         <ImageView
-            android:id="@+id/backPicture"
+            android:id="@+id/currentPicture"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:src="@drawable/noimage"
+            app:layout_constraintBottom_toBottomOf="@+id/previousPicture"
+            app:layout_constraintEnd_toStartOf="@+id/nextPicture"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/previousPicture"
+            app:layout_constraintTop_toTopOf="@+id/previousPicture" />
+
+        <ImageView
+            android:id="@+id/nextPicture"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:src="@drawable/noimage"
+            app:layout_constraintBottom_toBottomOf="@+id/currentPicture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/currentPicture"
+            app:layout_constraintTop_toTopOf="@+id/currentPicture" />
+
+        <ImageView
+            android:id="@+id/backPage"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="8dp"
             android:src="@drawable/back_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/nextPage"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/previousPicture" />
+
+        <ImageView
+            android:id="@+id/nextPage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/next_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/backPage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/backPage"
+            app:layout_constraintTop_toTopOf="@+id/backPage" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
