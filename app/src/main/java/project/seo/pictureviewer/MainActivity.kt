@@ -24,8 +24,14 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager =
             LinearLayoutManager(this)
 
-        RetrofitBuild.api.getPicture(1, 100).enqueue(object : Callback<PictureInfo> {
-            override fun onResponse(call: Call<PictureInfo>, response: Response<PictureInfo>) {
+        RetrofitBuild.api
+            .getPicture(1, 100)
+            .enqueue(object : Callback<PictureInfo> {
+
+            override fun onResponse(
+                call: Call<PictureInfo>,
+                response: Response<PictureInfo>) {
+
                 if (response.isSuccessful) {
                     binding.loadingBar.visibility = View.GONE
                     val recyclerAdapter = ListAdapter(QueryUtils.extractData(response.body()))
