@@ -8,17 +8,13 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import project.seo.pictureviewer.data.PictureInfo
 import project.seo.pictureviewer.databinding.ActivityMainBinding
-import project.seo.pictureviewer.network.PicturesAPI
+import project.seo.pictureviewer.network.RetrofitBuild
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val requestUrl = "https://picsum.photos"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -27,11 +23,8 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.layoutManager =
             LinearLayoutManager(this)
-        val retrofit = Retrofit.Builder().baseUrl(requestUrl).addConverterFactory(
-            GsonConverterFactory.create()).build()
-        val api = retrofit.create(PicturesAPI::class.java)
 
-        api.getPicture(1, 100).enqueue(object : Callback<PictureInfo> {
+        RetrofitBuild.api.getPicture(1, 100).enqueue(object : Callback<PictureInfo> {
             override fun onResponse(call: Call<PictureInfo>, response: Response<PictureInfo>) {
                 if (response.isSuccessful) {
                     binding.loadingBar.visibility = View.GONE
