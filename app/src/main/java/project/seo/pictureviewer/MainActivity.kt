@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val requestUrl = "https://picsum.photos"
-    private lateinit var dataSet: MutableList<PictureData>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -38,16 +38,15 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<PictureInfo>, response: Response<PictureInfo>) {
                 if (response.isSuccessful) {
                     binding.loadingBar.visibility = View.GONE
-                    dataSet = QueryUtils.extractData(response.body())
-                    val recyclerAdapter = ListAdapter(dataSet)
+                    val recyclerAdapter = ListAdapter(QueryUtils.extractData(response.body()))
                     recyclerView.adapter = recyclerAdapter
 
                     recyclerAdapter.setItemClickListener(object :
                         ListAdapter.OnItemClickListener {
                         override fun onClick(view: View, position: Int) {
                             startActivity(Intent(this@MainActivity,
-                                DetailPicture::class.java).putExtra("pictureData",
-                                dataSet[recyclerView.getChildAdapterPosition(view)]))
+                                DetailPicture::class.java).putExtra("picturePosition",
+                                position))
                         }
                     })
                 } else {
