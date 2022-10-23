@@ -32,7 +32,7 @@ class DetailPicture : AppCompatActivity() {
             binding.urlValue.setOnClickListener {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(pageUrl)))
             }
-
+            //TODO: 링크 클릭시 그림 다운로드해서 갤러리에 저장하기
             binding.downloadValue.text = imageUrl
             binding.backPage.setOnClickListener {
                 if (position > 0) {
