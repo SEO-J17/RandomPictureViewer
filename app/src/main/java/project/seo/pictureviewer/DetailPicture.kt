@@ -16,8 +16,8 @@ class DetailPicture : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val position = (intent.getSerializableExtra("picturePosition") as Int)
-        val dataSet = QueryUtils.dataSet[position] //캐스팅 필수! 아니면 Serializable 객체로 된다.]
+        val position = (intent.getSerializableExtra("picturePosition") as Int) //캐스팅 필수! 아니면 Serializable 객체로 된다.]
+        val dataSet = QueryUtils.dataSet[position]
         val backPosition = position - 1
         val nextPosition = position + 1
 
