@@ -34,7 +34,7 @@ class ListAdapter(private val dataSet: MutableList<PictureData>) :
         }
 
         with(dataSet[position]) {
-            holder.binding.author.text = author
+            //holder.binding.author.text = author
             holder.binding.pictures.load(imageUrl)
         }
     }
