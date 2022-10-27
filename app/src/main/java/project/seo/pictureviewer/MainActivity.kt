@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
                     call: Call<PictureInfo>,
                     response: Response<PictureInfo>,
                 ) {
-                    //성공적으로 응답이 왔을 경우 실행.
                     if (response.isSuccessful) {
                         //데이터를 다 받아와서 뷰에 표시 되면 로딩바 제거.
                         binding.loadingBar.visibility = View.GONE
