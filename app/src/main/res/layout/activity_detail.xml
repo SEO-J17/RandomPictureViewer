@@ -1,203 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/layout1"
+
+    <ImageView
+        android:id="@+id/detailImage"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.5"
-        android:orientation="vertical"
-        app:layout_constraintVertical_weight="1">
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/detailImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            android:scaleType="centerInside"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/idView"
+        style="@style/MainTitleStyle"
+        android:text="@string/textId"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detailImage" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:orientation="vertical"
-        android:paddingStart="8dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="8dp">
+    <TextView
+        android:id="@+id/idValue"
+        style="@style/MainValueStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        tools:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/idView"
+        app:layout_constraintStart_toEndOf="@+id/idView"
+        app:layout_constraintTop_toTopOf="@+id/idView" />
 
-        <TextView
-            android:id="@+id/idView"
-            style="@style/MainTitleStyle"
-            android:text="ID"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/authorView"
+        style="@style/MainTitleStyle"
+        android:text="@string/textAuthor"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idView" />
 
-        <TextView
-            android:id="@+id/idValue"
-            style="@style/MainValueStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="0"
-            app:layout_constraintBottom_toBottomOf="@+id/idView"
-            app:layout_constraintStart_toEndOf="@+id/idView"
-            app:layout_constraintTop_toTopOf="@+id/idView" />
+    <TextView
+        android:id="@+id/authorValue"
+        style="@style/MainValueStyle"
+        android:layout_marginStart="10dp"
+        tools:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/authorView"
+        app:layout_constraintStart_toEndOf="@id/authorView"
+        app:layout_constraintTop_toTopOf="@+id/authorView" />
 
-        <TextView
-            android:id="@+id/authorView"
-            style="@style/MainTitleStyle"
-            android:text="작가"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/idView" />
+    <TextView
+        android:id="@+id/widthView"
+        style="@style/MainTitleStyle"
+        android:text="@string/textWidth"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/authorView" />
 
-        <TextView
-            android:id="@+id/authorValue"
-            style="@style/MainValueStyle"
-            android:layout_marginStart="10dp"
-            android:text="0"
-            app:layout_constraintBottom_toBottomOf="@+id/authorView"
-            app:layout_constraintStart_toEndOf="@id/authorView"
-            app:layout_constraintTop_toTopOf="@+id/authorView" />
+    <TextView
+        android:id="@+id/widthValue"
+        style="@style/MainValueStyle"
+        android:layout_marginStart="10dp"
+        tools:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/widthView"
+        app:layout_constraintStart_toEndOf="@id/widthView"
+        app:layout_constraintTop_toTopOf="@+id/widthView" />
 
-        <TextView
-            android:id="@+id/widthView"
-            style="@style/MainTitleStyle"
-            android:text="너비"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/authorView" />
+    <TextView
+        android:id="@+id/heightView"
+        style="@style/MainTitleStyle"
+        android:text="@string/textHeight"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/widthView" />
 
-        <TextView
-            android:id="@+id/widthValue"
-            style="@style/MainValueStyle"
-            android:layout_marginStart="10dp"
-            android:text="0"
-            app:layout_constraintBottom_toBottomOf="@+id/widthView"
-            app:layout_constraintStart_toEndOf="@id/widthView"
-            app:layout_constraintTop_toTopOf="@+id/widthView" />
+    <TextView
+        android:id="@+id/heightValue"
+        style="@style/MainValueStyle"
+        android:layout_marginStart="10dp"
+        tools:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/heightView"
+        app:layout_constraintStart_toEndOf="@id/heightView"
+        app:layout_constraintTop_toTopOf="@+id/heightView" />
 
-        <TextView
-            android:id="@+id/heightView"
-            style="@style/MainTitleStyle"
-            android:text="높이"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/widthView" />
+    <TextView
+        android:id="@+id/urlView"
+        style="@style/MainTitleStyle"
+        android:text="@string/textUrl"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/heightView" />
 
-        <TextView
-            android:id="@+id/heightValue"
-            style="@style/MainValueStyle"
-            android:layout_marginStart="10dp"
-            android:text="0"
-            app:layout_constraintBottom_toBottomOf="@+id/heightView"
-            app:layout_constraintStart_toEndOf="@id/heightView"
-            app:layout_constraintTop_toTopOf="@+id/heightView" />
+    <TextView
+        android:id="@+id/urlValue"
+        style="@style/MainValueStyle"
+        android:layout_marginStart="10dp"
+        tools:text="0"
+        android:textColor="#0100FF"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@+id/urlView"
+        app:layout_constraintStart_toEndOf="@+id/urlView"
+        app:layout_constraintTop_toTopOf="@+id/urlView" />
 
-        <TextView
-            android:id="@+id/urlView"
-            style="@style/MainTitleStyle"
-            android:text="사이트"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/heightView" />
+    <TextView
+        android:id="@+id/downloadView"
+        style="@style/MainTitleStyle"
+        android:text="@string/textDownUrl"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/urlView" />
 
-        <TextView
-            android:id="@+id/urlValue"
-            style="@style/MainValueStyle"
-            android:layout_marginStart="10dp"
-            android:text="0"
-            android:textColor="#0100FF"
-            android:textStyle="bold|italic"
-            app:layout_constraintBottom_toBottomOf="@+id/urlView"
-            app:layout_constraintStart_toEndOf="@+id/urlView"
-            app:layout_constraintTop_toTopOf="@+id/urlView" />
+    <TextView
+        android:id="@+id/downloadValue"
+        style="@style/MainValueStyle"
+        android:layout_marginStart="10dp"
+        tools:text="0"
+        android:textColor="#0100FF"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@id/downloadView"
+        app:layout_constraintStart_toEndOf="@id/downloadView"
+        app:layout_constraintTop_toTopOf="@id/downloadView" />
 
-        <TextView
-            android:id="@+id/downloadView"
-            style="@style/MainTitleStyle"
-            android:text="다운로드"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/urlView" />
+    <ImageView
+        android:id="@+id/previousPicture"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/noimage"
+        app:layout_constraintEnd_toStartOf="@+id/currentPicture"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/downloadView" />
 
-        <TextView
-            android:id="@+id/downloadValue"
-            style="@style/MainValueStyle"
-            android:layout_marginStart="10dp"
-            android:text="0"
-            android:textColor="#0100FF"
-            android:textStyle="bold|italic"
-            app:layout_constraintBottom_toBottomOf="@id/downloadView"
-            app:layout_constraintStart_toEndOf="@id/downloadView"
-            app:layout_constraintTop_toTopOf="@id/downloadView" />
+    <ImageView
+        android:id="@+id/currentPicture"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:src="@drawable/noimage"
+        app:layout_constraintBottom_toBottomOf="@+id/previousPicture"
+        app:layout_constraintEnd_toStartOf="@+id/nextPicture"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/previousPicture"
+        app:layout_constraintTop_toTopOf="@+id/previousPicture" />
 
-        <ImageView
-            android:id="@+id/previousPicture"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/noimage"
-            app:layout_constraintEnd_toStartOf="@+id/currentPicture"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/downloadView" />
+    <ImageView
+        android:id="@+id/nextPicture"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:src="@drawable/noimage"
+        app:layout_constraintBottom_toBottomOf="@+id/currentPicture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/currentPicture"
+        app:layout_constraintTop_toTopOf="@+id/currentPicture" />
 
-        <ImageView
-            android:id="@+id/currentPicture"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:src="@drawable/noimage"
-            app:layout_constraintBottom_toBottomOf="@+id/previousPicture"
-            app:layout_constraintEnd_toStartOf="@+id/nextPicture"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/previousPicture"
-            app:layout_constraintTop_toTopOf="@+id/previousPicture" />
+    <ImageView
+        android:id="@+id/backPage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/back_arrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/nextPage"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/previousPicture" />
 
-        <ImageView
-            android:id="@+id/nextPicture"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:src="@drawable/noimage"
-            app:layout_constraintBottom_toBottomOf="@+id/currentPicture"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/currentPicture"
-            app:layout_constraintTop_toTopOf="@+id/currentPicture" />
+    <ImageView
+        android:id="@+id/nextPage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/next_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/backPage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/backPage"
+        app:layout_constraintTop_toTopOf="@+id/backPage" />
 
-        <ImageView
-            android:id="@+id/backPage"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/back_arrow"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/nextPage"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/previousPicture" />
-
-        <ImageView
-            android:id="@+id/nextPage"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/next_arrow"
-            app:layout_constraintBottom_toBottomOf="@+id/backPage"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/backPage"
-            app:layout_constraintTop_toTopOf="@+id/backPage" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
