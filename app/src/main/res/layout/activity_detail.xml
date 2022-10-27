@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/idView"
+        android:id="@+id/id_label"
         style="@style/MainTitleStyle"
         android:text="@string/textId"
         android:textSize="20sp"
@@ -32,67 +32,67 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         tools:text="0"
-        app:layout_constraintBottom_toBottomOf="@+id/idView"
-        app:layout_constraintStart_toEndOf="@+id/idView"
-        app:layout_constraintTop_toTopOf="@+id/idView" />
+        app:layout_constraintBottom_toBottomOf="@+id/id_label"
+        app:layout_constraintStart_toEndOf="@+id/id_label"
+        app:layout_constraintTop_toTopOf="@+id/id_label" />
 
     <TextView
-        android:id="@+id/authorView"
+        android:id="@+id/author_label"
         style="@style/MainTitleStyle"
         android:text="@string/textAuthor"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idView" />
+        app:layout_constraintTop_toBottomOf="@+id/id_label" />
 
     <TextView
         android:id="@+id/authorValue"
         style="@style/MainValueStyle"
         android:layout_marginStart="10dp"
         tools:text="0"
-        app:layout_constraintBottom_toBottomOf="@+id/authorView"
-        app:layout_constraintStart_toEndOf="@id/authorView"
-        app:layout_constraintTop_toTopOf="@+id/authorView" />
+        app:layout_constraintBottom_toBottomOf="@+id/author_label"
+        app:layout_constraintStart_toEndOf="@id/author_label"
+        app:layout_constraintTop_toTopOf="@+id/author_label" />
 
     <TextView
-        android:id="@+id/widthView"
+        android:id="@+id/width_label"
         style="@style/MainTitleStyle"
         android:text="@string/textWidth"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authorView" />
+        app:layout_constraintTop_toBottomOf="@+id/author_label" />
 
     <TextView
         android:id="@+id/widthValue"
         style="@style/MainValueStyle"
         android:layout_marginStart="10dp"
         tools:text="0"
-        app:layout_constraintBottom_toBottomOf="@+id/widthView"
-        app:layout_constraintStart_toEndOf="@id/widthView"
-        app:layout_constraintTop_toTopOf="@+id/widthView" />
+        app:layout_constraintBottom_toBottomOf="@+id/width_label"
+        app:layout_constraintStart_toEndOf="@id/width_label"
+        app:layout_constraintTop_toTopOf="@+id/width_label" />
 
     <TextView
-        android:id="@+id/heightView"
+        android:id="@+id/height_label"
         style="@style/MainTitleStyle"
         android:text="@string/textHeight"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/widthView" />
+        app:layout_constraintTop_toBottomOf="@id/width_label" />
 
     <TextView
         android:id="@+id/heightValue"
         style="@style/MainValueStyle"
         android:layout_marginStart="10dp"
         tools:text="0"
-        app:layout_constraintBottom_toBottomOf="@+id/heightView"
-        app:layout_constraintStart_toEndOf="@id/heightView"
-        app:layout_constraintTop_toTopOf="@+id/heightView" />
+        app:layout_constraintBottom_toBottomOf="@+id/height_label"
+        app:layout_constraintStart_toEndOf="@id/height_label"
+        app:layout_constraintTop_toTopOf="@+id/height_label" />
 
     <TextView
-        android:id="@+id/urlView"
+        android:id="@+id/url_label"
         style="@style/MainTitleStyle"
         android:text="@string/textUrl"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/heightView" />
+        app:layout_constraintTop_toBottomOf="@id/height_label" />
 
     <TextView
         android:id="@+id/urlValue"
@@ -101,16 +101,16 @@
         tools:text="0"
         android:textColor="#0100FF"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="@+id/urlView"
-        app:layout_constraintStart_toEndOf="@+id/urlView"
-        app:layout_constraintTop_toTopOf="@+id/urlView" />
+        app:layout_constraintBottom_toBottomOf="@+id/url_label"
+        app:layout_constraintStart_toEndOf="@+id/url_label"
+        app:layout_constraintTop_toTopOf="@+id/url_label" />
 
     <TextView
-        android:id="@+id/downloadView"
+        android:id="@+id/download_label"
         style="@style/MainTitleStyle"
         android:text="@string/textDownUrl"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/urlView" />
+        app:layout_constraintTop_toBottomOf="@id/url_label" />
 
     <TextView
         android:id="@+id/downloadValue"
@@ -119,9 +119,9 @@
         tools:text="0"
         android:textColor="#0100FF"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="@id/downloadView"
-        app:layout_constraintStart_toEndOf="@id/downloadView"
-        app:layout_constraintTop_toTopOf="@id/downloadView" />
+        app:layout_constraintBottom_toBottomOf="@id/download_label"
+        app:layout_constraintStart_toEndOf="@id/download_label"
+        app:layout_constraintTop_toTopOf="@id/download_label" />
 
     <ImageView
         android:id="@+id/previousPicture"
@@ -133,7 +133,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/downloadView" />
+        app:layout_constraintTop_toBottomOf="@id/download_label" />
 
     <ImageView
         android:id="@+id/currentPicture"
