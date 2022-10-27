@@ -4,15 +4,20 @@ import project.seo.pictureviewer.data.PictureData
 import project.seo.pictureviewer.data.PictureInfo
 
 object QueryUtils {
-    lateinit var dataSet: MutableList<PictureData>
-    fun extractData(pictureData: PictureInfo?): MutableList<PictureData> {
-        val pictureList = mutableListOf<PictureData>()
-        pictureData?.let { picture ->
-            picture.forEach { data ->
-                pictureList.add(PictureData(data))
+    private val dataSet = mutableListOf<PictureData>()
+    fun extractData(pictureData: PictureInfo?): List<PictureData> {
+        return (pictureData?.let { pictureInfo ->
+            pictureInfo.map { data ->
+                PictureData(data)
             }
+        } ?: listOf()).also {
+            dataSet.clear()
+            dataSet.addAll(it)
         }
-        dataSet = pictureList
-        return pictureList
     }
+
+    fun get(position: Int): PictureData? =
+        dataSet.getOrNull(position)
+
+    fun getSize(): Int = dataSet.size
 }
