@@ -20,11 +20,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val recyclerView = binding.recyclerView
-        //리사이클러뷰를 그리드 형식으로 사용하기 위해 레이아웃매니저 사용.
-        //구분선이 위,아래로 밖에 그어지지 않음.. XMl 디자인 문제인것 같다
         recyclerView.layoutManager =
             GridLayoutManager(this, 2)
-        //레트로핏 객체 이용.
         RetrofitBuild.api
             .getPicture(1, 100)
             .enqueue(object : Callback<PictureInfo> {
