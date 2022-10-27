@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailPicture"
+            android:name=".DetailActivity"
             android:label="DetailPicture" />
     </application>
 

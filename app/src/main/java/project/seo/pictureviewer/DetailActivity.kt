@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import project.seo.pictureviewer.databinding.ActivityDetailBinding
 
-class DetailPicture : AppCompatActivity() {
+class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ class DetailPicture : AppCompatActivity() {
                     startPage(backPosition)
                 } else {
                     //현재 위치가 0인데 이전페이지로 가는 버튼을 클릭했다면 toast메시지.
-                    Toast.makeText(this@DetailPicture, "처음 페이지 입니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DetailActivity, "처음 페이지 입니다.", Toast.LENGTH_SHORT).show()
                 }
             }
             //다음 화살표 그림이 있는 이미지뷰를 클릭하면 다음 페이지로 갈 수 있도록 클릭 리스너를 작성했다.
@@ -56,7 +56,7 @@ class DetailPicture : AppCompatActivity() {
                 if (position < QueryUtils.dataSet.size - 1) {
                     startPage(nextPosition)
                 } else {
-                    Toast.makeText(this@DetailPicture, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DetailActivity, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show()
                 }
             }
             //현재 페이지의 그림을 나타내기 위한 코드
@@ -74,8 +74,8 @@ class DetailPicture : AppCompatActivity() {
     //이전,다음 그림으로 이동 할 때  startActivity 메소드가 공통적으로 실행되므로 함수로 따로 분리했다.
     //intent에 putExtra를 통해 현재 위치를 전달하여 다음 액티비티가 실행 될 때 위치를 업데이트 하도록 했다.
     private fun startPage(position: Int) {
-        startActivity(Intent(this@DetailPicture,
-            DetailPicture::class.java).putExtra("picturePosition", position))
+        startActivity(Intent(this@DetailActivity,
+            DetailActivity::class.java).putExtra("picturePosition", position))
         finish()
     }
 }
