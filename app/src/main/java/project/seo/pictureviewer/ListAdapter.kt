@@ -1,42 +1,37 @@
 package project.seo.pictureviewer
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import project.seo.pictureviewer.data.PictureData
-import project.seo.pictureviewer.databinding.ListItemBinding
 
-class ListAdapter(private val dataSet: MutableList<PictureData>) :
-    RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
-    private lateinit var itemClickListener: OnItemClickListener
-    interface OnItemClickListener {
-        fun onClick(view: View, position: Int)
-    }
-
-    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
-        this.itemClickListener = onItemClickListener
-    }
-
-    class ListViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root)
+class ListAdapter(
+    private val dataSet: MutableList<PictureData> = mutableListOf(),
+    private val itemClickListener: (Int) -> Unit,
+) :
+    RecyclerView.Adapter<ListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
-        return ListViewHolder(ListItemBinding.bind(view))
+        return when (viewType) {
+            0 -> ListViewHolder(parent)
+            else -> ListViewHolder(parent)
+        }
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.itemView.setOnClickListener {
-            itemClickListener.onClick(it, position)
-        }
-
-        with(dataSet[position]) {
-            holder.binding.pictures.load(imageUrl)
+        with(holder) {
+            bind(dataSet[position])
+            itemView.setOnClickListener {
+                itemClickListener(position)
+            }
         }
     }
 
     override fun getItemCount(): Int = dataSet.size
 
+    fun updateData(data: List<PictureData>) {
+        dataSet.clear()
+        dataSet.addAll(data)
+        notifyDataSetChanged()
+    }
 
 }
