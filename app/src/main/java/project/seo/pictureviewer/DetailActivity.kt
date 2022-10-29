@@ -24,43 +24,41 @@ class DetailActivity : AppCompatActivity() {
     private fun startPage(position: Int) {
         val backPosition = position - 1
         val nextPosition = position + 1
-        bind(position)?.let {
-            with(it) {
-                binding.detailImage.load(download_url)
-                binding.idValue.text = id
-                binding.authorValue.text = author
-                binding.widthValue.text = width
-                binding.heightValue.text = height
-                binding.urlValue.text = url
-                binding.urlValue.setOnClickListener {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        getDataSet(position)?.let { data ->
+            with(binding) {
+                detailImage.load(data.downloadUrl)
+                idValue.text = data.id
+                authorValue.text = data.author
+                widthValue.text = data.width
+                heightValue.text = data.height
+                urlValue.text = data.url
+                urlValue.setOnClickListener {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(data.url)))
                 }
                 //TODO: 링크 클릭시 그림 다운로드해서 갤러리에 저장하기
-                binding.downloadValue.text = download_url
-                binding.backPage.setOnClickListener {
+                downloadValue.text = data.downloadUrl
+                backPage.setOnClickListener {
                     if (position > 0) {
                         startPage(backPosition)
                     } else {
                         showToast("처음 페이지 입니다.")
                     }
                 }
-                binding.nextPage.setOnClickListener {
+                nextPage.setOnClickListener {
                     if (position < QueryUtils.getSize() - 1) {
                         startPage(nextPosition)
                     } else {
                         showToast("마지막 페이지 입니다.")
                     }
                 }
-                binding.currentPicture.load(download_url)
-                showPreview(binding.previousPicture, backPosition)
-                showPreview(binding.nextPicture, nextPosition)
+                currentPicture.load(data.downloadUrl)
+                showPreview(previousPicture, backPosition)
+                showPreview(nextPicture, nextPosition)
             }
         }
     }
 
-    private fun bind(position: Int): PictureData? {
-        return QueryUtils.get(position)
-    }
+    private fun getDataSet(position: Int): PictureData? = QueryUtils.get(position)
 
     private fun showToast(message: String) {
         Toast.makeText(this@DetailActivity, message, Toast.LENGTH_SHORT)
@@ -68,7 +66,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun showPreview(previewPicture: ImageView, position: Int) {
-        previewPicture.load(bind(position)?.download_url ?: R.drawable.no_image)
+        previewPicture.load(getDataSet(position)?.downloadUrl ?: R.drawable.no_image)
     }
 
 
