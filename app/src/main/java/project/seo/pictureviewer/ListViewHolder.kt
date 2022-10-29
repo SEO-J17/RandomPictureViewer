@@ -11,15 +11,16 @@ class ListViewHolder(
     private val binding: ListItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(pictureData: PictureData) {
-        binding.pictures.load(pictureData.download_url)
+        binding.pictures.load(pictureData.downloadUrl)
     }
 
     companion object {
         operator fun invoke(parent: ViewGroup): ListViewHolder {
-            return ListViewHolder(ListItemBinding
-                .inflate(LayoutInflater.from(parent.context),
-                    parent,
-                    false))
+            return ListViewHolder(
+                ListItemBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
+            )
         }
     }
 }

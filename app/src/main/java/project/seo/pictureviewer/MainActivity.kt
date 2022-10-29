@@ -21,10 +21,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.recyclerView.adapter = ListAdapter { position ->
-            startActivity(Intent(this@MainActivity,
-                DetailActivity::class.java)
-                .putExtra(EXTRA_NAME,
-                    position))
+            startActivity(
+                Intent(
+                    this@MainActivity, DetailActivity::class.java
+                ).putExtra(
+                    EXTRA_NAME, position
+                )
+            )
         }
 
         RetrofitService
@@ -37,7 +40,10 @@ class MainActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         binding.loadingBar.visibility = View.GONE
                         (binding.recyclerView.adapter as? ListAdapter)?.updateData(
-                            QueryUtils.extractData(response.body()))
+                            QueryUtils.extractData(
+                                response.body()
+                            )
+                        )
                     } else {
                         Log.e("MainActivity", "실패")
                     }

@@ -14,12 +14,12 @@ data class PictureData(
     @SerializedName("url")
     val url: String,
     @SerializedName("download_url")
-    val download_url: String,
+    val downloadUrl: String,
 ) {
     companion object {
         operator fun invoke(data: PictureData): PictureData {
             return with(data) {
-                PictureData(id, author, width, height, url, download_url)
+                PictureData(id, author, width, height, url, downloadUrl)
             }
         }
     }
