@@ -10,12 +10,10 @@ class ListAdapter(
 ) :
     RecyclerView.Adapter<ListViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        return when (viewType) {
-            0 -> ListViewHolder(parent)
-            else -> ListViewHolder(parent)
-        }
-    }
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ListViewHolder = ListViewHolder(parent)
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         with(holder) {
