@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
+import project.seo.pictureviewer.data.PictureData
 import project.seo.pictureviewer.data.PictureInfo
 import project.seo.pictureviewer.databinding.ActivityMainBinding
 import project.seo.pictureviewer.network.RetrofitService
@@ -19,30 +19,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val recyclerView = binding.recyclerView
-        recyclerView.layoutManager =
-            GridLayoutManager(this, 2)
-        RetrofitService.api
-            .getPicture(1, 100)
-            .enqueue(object : Callback<PictureInfo> {
 
+        binding.recyclerView.adapter = ListAdapter { position ->
+            startActivity(Intent(this@MainActivity,
+                DetailActivity::class.java)
+                .putExtra(EXTRA_NAME,
+                    position))
+        }
+
+        RetrofitService
+            .getPicture()
+            .enqueue(object : Callback<PictureInfo> {
                 override fun onResponse(
                     call: Call<PictureInfo>,
                     response: Response<PictureInfo>,
                 ) {
                     if (response.isSuccessful) {
                         binding.loadingBar.visibility = View.GONE
-                        //
-                        val recyclerAdapter = ListAdapter(QueryUtils.extractData(response.body()))
-                        recyclerView.adapter = recyclerAdapter
-                        recyclerAdapter.setItemClickListener(object :
-                            ListAdapter.OnItemClickListener {
-                            override fun onClick(view: View, position: Int) {
-                                startActivity(Intent(this@MainActivity,
-                                    DetailActivity::class.java).putExtra("picturePosition",
-                                    position))
-                            }
-                        })
+                        (binding.recyclerView.adapter as? ListAdapter)?.updateData(
+                            QueryUtils.extractData(response.body()))
                     } else {
                         Log.e("MainActivity", "실패")
                     }
@@ -52,5 +47,9 @@ class MainActivity : AppCompatActivity() {
                     Log.e("MainActivity", "onFailure 에러: ${t.message.toString()}")
                 }
             })
+    }
+
+    companion object {
+        const val EXTRA_NAME = "picturePosition"
     }
 }
