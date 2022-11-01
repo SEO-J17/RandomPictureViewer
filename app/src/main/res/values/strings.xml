@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">RandomPictureViewer</string>
+    <string name="textId">ID</string>
+    <string name="textAuthor">작가</string>
+    <string name="textWidth">너비</string>
+    <string name="textHeight">높이</string>
+    <string name="textUrl">사이트</string>
+    <string name="textDownUrl">다운로드</string>
 </resources>
