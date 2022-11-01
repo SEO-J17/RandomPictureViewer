@@ -26,6 +26,6 @@ object RetrofitService {
 
     private val api = retrofit.create(PicturesAPI::class.java)
 
-    fun getPicture(page: Int = 1, limit: Int = 100) = api.getPicture(page, limit)
+    suspend fun getPicture(page: Int = 1, limit: Int = 100) = api.getPicture(page, limit)
 
 }
