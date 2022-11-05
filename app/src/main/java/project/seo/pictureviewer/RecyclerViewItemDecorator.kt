@@ -11,9 +11,5 @@ class RecyclerViewItemDecorator : RecyclerView.ItemDecoration() {
         parent: RecyclerView,
         state: RecyclerView.State,
     ) {
-        outRect.top = 5
-        outRect.bottom = 5
-        outRect.left = 5
-        outRect.right = 5
     }
 }
