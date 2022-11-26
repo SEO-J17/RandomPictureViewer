@@ -1,43 +1,47 @@
 package project.seo.pictureviewer
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import androidx.lifecycle.coroutineScope
+import kotlinx.coroutines.CoroutineScope
+import project.seo.pictureviewer.data.PictureData
 import project.seo.pictureviewer.databinding.ActivityMainBinding
-import project.seo.pictureviewer.network.RetrofitService
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var presenter: MainContract.Presenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        presenter = MainPresenter(this)
+        presenter.start()
+
         binding.recyclerView.addItemDecoration(RecyclerViewItemDecorator())
 
-        binding.recyclerView.adapter = ListAdapter { position ->
-            startActivity(
-                Intent(
-                    this@MainActivity, DetailActivity::class.java
-                ).putExtra(
-                    EXTRA_NAME, position
-                )
-            )
+    }
+
+    override val lifecycleScope: CoroutineScope
+        get() = lifecycle.coroutineScope
+
+    override fun showLoadingBar() {
+        binding.loadingBar.visibility = View.VISIBLE
+    }
+
+    override fun hideLoadingBar() {
+        binding.loadingBar.visibility = View.GONE
+    }
+
+    override fun showList(pictureInfo: MutableList<PictureData>) {
+        binding.recyclerView.adapter = ListAdapter(pictureInfo) { position ->
+            presenter.onItemClick(position)
         }
-        lifecycleScope.launch {
-            with(RetrofitService.getPicture()) {
-                (binding.recyclerView.adapter as? ListAdapter)?.updateData(this)
-                QueryUtils.extractData(this)
-            }
-            withContext(Dispatchers.Main) {
-                binding.loadingBar.visibility = View.GONE
-            }
-        }
+    }
+
+    override fun showDetail(position: Int) {
     }
 
     companion object {
