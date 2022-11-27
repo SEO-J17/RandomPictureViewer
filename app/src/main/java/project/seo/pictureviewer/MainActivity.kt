@@ -1,5 +1,6 @@
 package project.seo.pictureviewer
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -56,6 +57,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showDetail(position: Int) {
+        startActivity(
+            Intent(
+                this@MainActivity,
+                DetailActivity::class.java
+            ).putExtra(
+                EXTRA_NAME,
+                position
+            )
+        )
     }
 
     companion object {
