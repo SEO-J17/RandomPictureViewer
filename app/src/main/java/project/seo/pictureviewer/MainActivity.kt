@@ -9,6 +9,7 @@ import androidx.lifecycle.coroutineScope
 import kotlinx.coroutines.CoroutineScope
 import project.seo.pictureviewer.data.PictureData
 import project.seo.pictureviewer.databinding.ActivityMainBinding
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
@@ -63,12 +64,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 DetailActivity::class.java
             ).putExtra(
                 EXTRA_NAME,
-                position
+                position,
+            ).putExtra(
+                EXTRA_DATA_SET,
+                presenter.getDataSet() as ArrayList<PictureData>
             )
         )
     }
 
     companion object {
         const val EXTRA_NAME = "picturePosition"
+        const val EXTRA_DATA_SET = "pictureData"
     }
 }
