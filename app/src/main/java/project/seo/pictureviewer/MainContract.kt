@@ -21,5 +21,7 @@ interface MainContract {
         fun start()
 
         fun onItemClick(position: Int)
+
+        fun getDataSet(): MutableList<PictureData>
     }
 }
