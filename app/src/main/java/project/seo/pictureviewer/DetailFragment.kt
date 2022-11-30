@@ -3,22 +3,34 @@ package project.seo.pictureviewer
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import coil.load
 import project.seo.pictureviewer.data.PictureData
-import project.seo.pictureviewer.databinding.ActivityDetailBinding
+import project.seo.pictureviewer.databinding.FragmentDetailBinding
 
-class DetailActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityDetailBinding
+class DetailFragment(
+    private val position: Int
+) : Fragment() {
+    private lateinit var binding: FragmentDetailBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        binding = FragmentDetailBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
 
-        startPage(intent.getSerializableExtra(MainActivity.EXTRA_NAME) as Int)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        startPage(position)
     }
 
     private fun startPage(position: Int) {
@@ -39,14 +51,14 @@ class DetailActivity : AppCompatActivity() {
                 downloadValue.text = data.downloadUrl
                 backPage.setOnClickListener {
                     if (position > 0) {
-                        startPage(backPosition)
+                        (activity as MainActivity).setFragment(DetailFragment(backPosition))
                     } else {
                         showToast("처음 페이지 입니다.")
                     }
                 }
                 nextPage.setOnClickListener {
                     if (position < QueryUtils.getSize() - 1) {
-                        startPage(nextPosition)
+                        (activity as MainActivity).setFragment(DetailFragment(nextPosition))
                     } else {
                         showToast("마지막 페이지 입니다.")
                     }
@@ -61,7 +73,7 @@ class DetailActivity : AppCompatActivity() {
     private fun getDataSet(position: Int): PictureData? = QueryUtils.get(position)
 
     private fun showToast(message: String) {
-        Toast.makeText(this@DetailActivity, message, Toast.LENGTH_SHORT)
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT)
             .show()
     }
 
