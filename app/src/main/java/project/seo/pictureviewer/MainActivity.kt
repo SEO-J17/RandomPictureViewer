@@ -1,12 +1,15 @@
 package project.seo.pictureviewer
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.lifecycle.coroutineScope
 import kotlinx.coroutines.CoroutineScope
 import project.seo.pictureviewer.data.PictureData
 import project.seo.pictureviewer.databinding.ActivityMainBinding
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
@@ -16,6 +19,19 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setFragment(PictureFragment())
+    }
+
+    fun setFragment(fragment: Fragment) {
+        with(supportFragmentManager) {
+            if (backStackEntryCount == 0) {
+                beginTransaction().add(binding.fragmentContainerView.id, fragment)
+                    .addToBackStack("first")
+            } else {
+                beginTransaction()
+                    .replace(binding.fragmentContainerView.id, fragment)
+            }
+                .commit()
 
         presenter = MainPresenter(this)
         presenter.start()
@@ -42,9 +58,22 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showDetail(position: Int) {
+        startActivity(
+            Intent(
+                this@MainActivity,
+                DetailActivity::class.java
+            ).putExtra(
+                EXTRA_NAME,
+                position,
+            ).putExtra(
+                EXTRA_DATA_SET,
+                presenter.getDataSet() as ArrayList<PictureData>
+            )
+        )
     }
 
     companion object {
         const val EXTRA_NAME = "picturePosition"
+        const val EXTRA_DATA_SET = "pictureData"
     }
 }

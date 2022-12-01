@@ -31,4 +31,7 @@ class MainPresenter(
             view.showList(dataset)
         }
     }
+
+    override fun getDataSet() = dataset
+
 }

@@ -1,6 +1,7 @@
 package project.seo.pictureviewer.data
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class PictureData(
     @SerializedName("id")
@@ -15,7 +16,7 @@ data class PictureData(
     val url: String,
     @SerializedName("download_url")
     val downloadUrl: String,
-) {
+) : Serializable {
     companion object {
         operator fun invoke(data: PictureData): PictureData {
             return with(data) {

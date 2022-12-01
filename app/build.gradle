@@ -58,4 +58,6 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     // lifecucleScope
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+    // fragment
+    implementation "androidx.fragment:fragment-ktx:1.5.4"
 }
