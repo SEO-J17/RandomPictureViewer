@@ -3,6 +3,7 @@ package project.seo.pictureviewer.network
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import project.seo.pictureviewer.BuildConfig
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -34,5 +35,7 @@ object RetrofitService {
     private val api = retrofit.create(PicturesAPI::class.java)
 
     suspend fun getPicture(page: Int = 1, limit: Int = 100) = api.getPicture(page, limit)
+
+    suspend fun getPictureData(id: Int) = api.getPictureData(id)
 
 }
