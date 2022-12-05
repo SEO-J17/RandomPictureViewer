@@ -1,4 +1,4 @@
-package project.seo.pictureviewer
+package project.seo.pictureviewer.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

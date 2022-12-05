@@ -1,4 +1,4 @@
 package project.seo.pictureviewer.data
 
-class PictureInfo : ArrayList<PictureData>()
+typealias PictureInfo = List<PictureData>
 

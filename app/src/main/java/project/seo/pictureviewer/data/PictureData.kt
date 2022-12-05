@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class PictureData(
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("author")
     val author: String,
     @SerializedName("width")
@@ -15,12 +15,4 @@ data class PictureData(
     val url: String,
     @SerializedName("download_url")
     val downloadUrl: String,
-) {
-    companion object {
-        operator fun invoke(data: PictureData): PictureData {
-            return with(data) {
-                PictureData(id, author, width, height, url, downloadUrl)
-            }
-        }
-    }
-}
+)

@@ -35,4 +35,6 @@ object RetrofitService {
 
     suspend fun getPicture(page: Int = 1, limit: Int = 100) = api.getPicture(page, limit)
 
+    suspend fun getPictureData(id: Int) = api.getPictureData(id)
+
 }
