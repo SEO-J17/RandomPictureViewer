@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.contract
+package project.seo.pictureviewer.ui.main
 
 import kotlinx.coroutines.CoroutineScope
 import project.seo.pictureviewer.data.PictureInfo

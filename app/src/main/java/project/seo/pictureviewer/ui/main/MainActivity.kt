@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.view
+package project.seo.pictureviewer.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

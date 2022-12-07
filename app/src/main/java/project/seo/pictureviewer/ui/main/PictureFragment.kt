@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.view
+package project.seo.pictureviewer.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,12 +10,11 @@ import androidx.fragment.app.replace
 import androidx.lifecycle.coroutineScope
 import kotlinx.coroutines.CoroutineScope
 import project.seo.pictureviewer.R
-import project.seo.pictureviewer.adapter.ListAdapter
-import project.seo.pictureviewer.RecyclerViewItemDecorator
-import project.seo.pictureviewer.contract.PictureContract
+import project.seo.pictureviewer.ui.adapter.ListAdapter
+import project.seo.pictureviewer.utils.RecyclerViewItemDecorator
 import project.seo.pictureviewer.data.PictureData
 import project.seo.pictureviewer.databinding.FragmentPictureBinding
-import project.seo.pictureviewer.presenter.PicturePresenter
+import project.seo.pictureviewer.ui.detail.DetailFragment
 
 class PictureFragment : Fragment(), PictureContract.View {
     private lateinit var binding: FragmentPictureBinding

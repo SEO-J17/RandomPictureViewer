@@ -1,9 +1,8 @@
-package project.seo.pictureviewer.presenter
+package project.seo.pictureviewer.ui.main
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import project.seo.pictureviewer.contract.PictureContract
 import project.seo.pictureviewer.network.RetrofitService
 
 class PicturePresenter(

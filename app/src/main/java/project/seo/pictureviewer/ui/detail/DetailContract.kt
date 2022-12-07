@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.contract
+package project.seo.pictureviewer.ui.detail
 
 import android.net.Uri
 import kotlinx.coroutines.CoroutineScope

@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.view
+package project.seo.pictureviewer.ui.detail
 
 import android.content.Intent
 import android.net.Uri
@@ -14,9 +14,7 @@ import androidx.lifecycle.coroutineScope
 import coil.load
 import kotlinx.coroutines.CoroutineScope
 import project.seo.pictureviewer.R
-import project.seo.pictureviewer.contract.DetailContract
 import project.seo.pictureviewer.databinding.FragmentDetailBinding
-import project.seo.pictureviewer.presenter.DetailPresenter
 
 class DetailFragment(
 ) : Fragment(), DetailContract.View {

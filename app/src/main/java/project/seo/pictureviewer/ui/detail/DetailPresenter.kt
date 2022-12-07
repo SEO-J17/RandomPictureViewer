@@ -1,11 +1,11 @@
-package project.seo.pictureviewer.presenter
+package project.seo.pictureviewer.ui.detail
 
 import android.net.Uri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import project.seo.pictureviewer.R
-import project.seo.pictureviewer.contract.DetailContract
+import project.seo.pictureviewer.ui.detail.DetailContract
 import project.seo.pictureviewer.network.RetrofitService
 import retrofit2.HttpException
 

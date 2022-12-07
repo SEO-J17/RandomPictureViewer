@@ -1,4 +1,4 @@
-package project.seo.pictureviewer
+package project.seo.pictureviewer.utils
 
 import android.graphics.Rect
 import android.view.View
