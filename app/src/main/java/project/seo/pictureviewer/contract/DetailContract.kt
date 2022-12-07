@@ -39,10 +39,12 @@ interface DetailContract {
 
         fun showNextNoImage(id: Int)
 
+        fun changePage(pictureId: Int)
+
     }
 
     interface Presenter {
-        fun start(pictureId: Int)
+        fun start()
 
         suspend fun setNextPreview(nextId: Int)
 
