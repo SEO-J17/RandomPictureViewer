@@ -20,11 +20,8 @@ class PicturePresenter(
             val pictureInfo = withContext(Dispatchers.IO) {
                 RetrofitService.getPicture()
             }
-
-            withContext(Dispatchers.Main) {
-                view.hideLoadingBar()
-                view.showPictures(pictureInfo)
-            }
+            view.hideLoadingBar()
+            view.showPictures(pictureInfo)
         }
     }
 }
