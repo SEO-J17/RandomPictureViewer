@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.lifecycle.coroutineScope
 import kotlinx.coroutines.CoroutineScope
+import project.seo.pictureviewer.R
 import project.seo.pictureviewer.adapter.ListAdapter
 import project.seo.pictureviewer.RecyclerViewItemDecorator
 import project.seo.pictureviewer.contract.PictureContract
@@ -60,6 +63,12 @@ class PictureFragment : Fragment(), PictureContract.View {
     }
 
     override fun showDetail(pictureId: Int) {
-        (activity as MainActivity).showDetailFragment(pictureId)
+        parentFragmentManager.commit {
+            replace<DetailFragment>(
+                R.id.container, args = Bundle().apply {
+                    putInt(DetailFragment.PICTURE_ID, pictureId)
+                }
+            )
+        }
     }
 }
