@@ -8,15 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.lifecycle.coroutineScope
 import coil.load
 import kotlinx.coroutines.CoroutineScope
+import project.seo.pictureviewer.R
 import project.seo.pictureviewer.contract.DetailContract
 import project.seo.pictureviewer.databinding.FragmentDetailBinding
 import project.seo.pictureviewer.presenter.DetailPresenter
 
 class DetailFragment(
-    private val pictureId: Int
 ) : Fragment(), DetailContract.View {
     private lateinit var binding: FragmentDetailBinding
     private lateinit var presenter: DetailContract.Presenter
@@ -28,13 +30,13 @@ class DetailFragment(
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentDetailBinding.inflate(layoutInflater, container, false)
-        presenter = DetailPresenter(this)
+        presenter = DetailPresenter(this, arguments?.getInt(PICTURE_ID) ?: 0)
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.start(pictureId)
+        presenter.start()
     }
 
     override val lifecycleScope: CoroutineScope
@@ -76,7 +78,7 @@ class DetailFragment(
         with(binding.previousPicture) {
             load(url)
             setOnClickListener {
-                (activity as MainActivity).showDetailFragment(pictureId)
+                changePage(pictureId)
             }
         }
     }
@@ -89,7 +91,7 @@ class DetailFragment(
         with(binding.nextPicture) {
             load(url)
             setOnClickListener {
-                (activity as MainActivity).showDetailFragment(pictureId)
+                changePage(pictureId)
             }
         }
     }
@@ -102,13 +104,13 @@ class DetailFragment(
 
     override fun showNextPage(id: Int) {
         binding.nextPage.setOnClickListener {
-            (activity as MainActivity).showDetailFragment(id)
+            changePage(id)
         }
     }
 
     override fun showPreviousPage(id: Int) {
         binding.backPage.setOnClickListener {
-            (activity as MainActivity).showDetailFragment(id)
+            changePage(id)
         }
     }
 
@@ -118,5 +120,19 @@ class DetailFragment(
 
     override fun showNextNoImage(id: Int) {
         binding.nextPicture.load(id)
+    }
+
+    override fun changePage(pictureId: Int) {
+        parentFragmentManager.commit {
+            replace<DetailFragment>(
+                R.id.container, args = Bundle().apply {
+                    putInt(PICTURE_ID, pictureId)
+                }
+            )
+        }
+    }
+
+    companion object {
+        const val PICTURE_ID = "pictureId"
     }
 }
