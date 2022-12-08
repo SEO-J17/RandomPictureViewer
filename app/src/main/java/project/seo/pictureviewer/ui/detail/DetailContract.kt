@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.contract
+package project.seo.pictureviewer.ui.detail
 
 import android.net.Uri
 import kotlinx.coroutines.CoroutineScope
@@ -39,10 +39,12 @@ interface DetailContract {
 
         fun showNextNoImage(id: Int)
 
+        fun changePage(pictureId: Int)
+
     }
 
     interface Presenter {
-        fun start(pictureId: Int)
+        fun start()
 
         suspend fun setNextPreview(nextId: Int)
 

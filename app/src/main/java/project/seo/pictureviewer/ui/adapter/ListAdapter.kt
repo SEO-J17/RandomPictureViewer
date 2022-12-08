@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.adapter
+package project.seo.pictureviewer.ui.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
