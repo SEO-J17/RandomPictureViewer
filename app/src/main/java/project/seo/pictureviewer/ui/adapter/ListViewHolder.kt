@@ -3,7 +3,6 @@ package project.seo.pictureviewer.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import project.seo.pictureviewer.data.PictureData
 import project.seo.pictureviewer.databinding.ListItemBinding
 
@@ -11,7 +10,7 @@ class ListViewHolder(
     private val binding: ListItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(pictureData: PictureData) {
-        binding.pictures.load(pictureData.downloadUrl)
+        binding.data = pictureData
     }
 
     companion object {
