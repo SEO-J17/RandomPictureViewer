@@ -24,6 +24,9 @@ class DetailViewModel : ViewModel() {
     private val _error = MutableLiveData<Event<String>>()
     val error: LiveData<Event<String>> = _error
 
+    private val _webPage = MutableLiveData<Event<Boolean>>()
+    val webPage: LiveData<Event<Boolean>> = _webPage
+
     fun fetchDetail() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -71,6 +74,10 @@ class DetailViewModel : ViewModel() {
         } else {
             _error.value = Event("이미지가 더 이상 없습니다.")
         }
+    }
+
+    fun showWebPage() {
+        _webPage.value = Event(true)
     }
 
     fun getId(): Int = PICTURE_ID
