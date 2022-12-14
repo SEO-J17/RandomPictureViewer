@@ -1,5 +1,3 @@
-import org.gradle.util.internal.SimpleMapInterner
-
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -33,6 +31,7 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
     }
     buildFeatures {
+        viewBinding = true
         dataBinding = true
     }
 }
