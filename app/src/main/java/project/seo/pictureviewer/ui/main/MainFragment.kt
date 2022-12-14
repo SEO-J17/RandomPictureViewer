@@ -4,12 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.*
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import project.seo.pictureviewer.R
 import project.seo.pictureviewer.databinding.FragmentMainBinding
 import project.seo.pictureviewer.ui.adapter.ListAdapter
-import project.seo.pictureviewer.utils.RecyclerViewItemDecorator
 import project.seo.pictureviewer.ui.detail.DetailFragment
+import project.seo.pictureviewer.ui.detail.observeEvent
+import project.seo.pictureviewer.utils.RecyclerViewItemDecorator
 
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
@@ -30,8 +35,6 @@ class MainFragment : Fragment() {
         with(binding) {
             vm = viewModel
             lifecycleOwner = viewLifecycleOwner
-            viewModel.start()
-
             recyclerView.adapter = ListAdapter { pictureId ->
                 parentFragmentManager.commit {
                     replace<DetailFragment>(
@@ -44,7 +47,9 @@ class MainFragment : Fragment() {
             }
             recyclerView.addItemDecoration(RecyclerViewItemDecorator())
         }
-
-
+        viewModel.start()
+        viewModel.error.observeEvent(viewLifecycleOwner) { message ->
+            Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
+        }
     }
 }
