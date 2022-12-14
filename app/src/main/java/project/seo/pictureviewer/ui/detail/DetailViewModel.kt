@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import project.seo.pictureviewer.data.PictureData
 import project.seo.pictureviewer.network.RetrofitService
 import retrofit2.HttpException
@@ -28,10 +27,8 @@ class DetailViewModel : ViewModel() {
     val webPage: LiveData<Event<Boolean>> = _webPage
 
     fun fetchDetail() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                _pictureDetail.postValue(RetrofitService.getPictureData(PICTURE_ID))
-            }
+        viewModelScope.launch(exceptionHandler()) {
+            _pictureDetail.postValue(RetrofitService.getPictureData(PICTURE_ID))
             setPreviousPreview(PICTURE_ID - 1)
             setNextPreview(PICTURE_ID + 1)
         }
@@ -39,9 +36,7 @@ class DetailViewModel : ViewModel() {
 
     private suspend fun setPreviousPreview(pictureId: Int) {
         try {
-            withContext(Dispatchers.IO) {
-                _previousPreview.postValue(RetrofitService.getPictureData(pictureId).downloadUrl)
-            }
+            _previousPreview.postValue(RetrofitService.getPictureData(pictureId).downloadUrl)
         } catch (e: HttpException) {
             _previousPreview.value = null
         }
@@ -49,22 +44,18 @@ class DetailViewModel : ViewModel() {
 
     private suspend fun setNextPreview(pictureId: Int) {
         try {
-            withContext(Dispatchers.IO) {
-                _nextPreview.postValue(RetrofitService.getPictureData(pictureId).downloadUrl)
-            }
+            _nextPreview.postValue(RetrofitService.getPictureData(pictureId).downloadUrl)
         } catch (e: HttpException) {
             _nextPreview.value = null
         }
     }
 
     fun updateId(pictureId: Int) {
-        with(RetrofitService) {
-            if (pictureId >= startPage - 1 && pictureId < endPage) {
-                PICTURE_ID = pictureId
-                isValid(true)
-            } else {
-                isValid(false)
-            }
+        if (pictureId in 0 until 100) {
+            PICTURE_ID = pictureId
+            isValid(true)
+        } else {
+            isValid(false)
         }
     }
 
@@ -76,11 +67,27 @@ class DetailViewModel : ViewModel() {
         }
     }
 
-    fun showWebPage() {
+    fun clickWebPage() {
         _webPage.value = Event(true)
     }
 
-    fun getId(): Int = PICTURE_ID
+    fun previousPage() {
+        updateId(PICTURE_ID - 1)
+    }
+
+    fun nextPage() {
+        updateId(PICTURE_ID + 1)
+    }
+
+    private fun exceptionHandler(): CoroutineExceptionHandler {
+        return CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+            when (throwable) {
+                is HttpException -> _error.value = Event("네트워크 오류. 다시 시도해주세요")
+                else -> _error.value = Event("이미지를 불러올 수 없습니다. \n다시 시도해 주세요.")
+            }
+        }
+    }
 
     companion object {
         private var PICTURE_ID = 0
