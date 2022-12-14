@@ -31,18 +31,23 @@ class DetailFragment : Fragment() {
 
         with(binding) {
             detailVm = viewModel
-            detailFragment = this@DetailFragment
             lifecycleOwner = viewLifecycleOwner
         }
 
-        viewModel.fetchDetail()
-        viewModel.error.observe(this.viewLifecycleOwner, EventObserver { message ->
-            Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
-        })
-    }
+        with(viewModel) {
+            fetchDetail()
+            error.observeEvent(viewLifecycleOwner) { message ->
+                Toast.makeText(this@DetailFragment.context, message, Toast.LENGTH_SHORT).show()
+            }
 
-    fun showWebPage(url: String) {
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            webPage.observeEvent(viewLifecycleOwner) {
+                startActivity(
+                    Intent(Intent.ACTION_VIEW,
+                        Uri.parse(pictureDetail.value?.url)
+                    )
+                )
+            }
+        }
     }
 
     companion object {
