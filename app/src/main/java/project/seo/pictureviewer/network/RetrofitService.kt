@@ -1,10 +1,12 @@
 package project.seo.pictureviewer.network
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import project.seo.pictureviewer.BuildConfig
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitService {
@@ -20,22 +22,25 @@ object RetrofitService {
         }
     }
 
+    private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+
     private val client =
         OkHttpClient.Builder()
             .addInterceptor(httpInterceptor)
-            .connectTimeout(20000L, TimeUnit.SECONDS)
+            .connectTimeout(10L, TimeUnit.SECONDS)
             .build()
 
     private val retrofit =
         Retrofit.Builder()
             .baseUrl(requestUrl)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(client)
             .build()
 
     private val api = retrofit.create(PicturesAPI::class.java)
 
-    suspend fun getPicture(page: Int = startPage, limit: Int = endPage) = api.getPicture(page, limit)
+    suspend fun getPicture(page: Int = startPage, limit: Int = endPage) =
+        api.getPicture(page, limit)
 
     suspend fun getPictureData(id: Int) = api.getPictureData(id)
 
