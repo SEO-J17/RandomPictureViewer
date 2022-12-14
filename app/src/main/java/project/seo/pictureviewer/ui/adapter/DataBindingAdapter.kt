@@ -14,7 +14,8 @@ fun RecyclerView.setList(list: List<PictureData>?) {
 
 @BindingAdapter("bind:imgUrl")
 fun ImageView.setImage(url: String?) {
-    url?.let {
-        Glide.with(this.context).load(url).error(R.drawable.no_image).into(this)
-    } ?: Glide.with(this.context).load(R.drawable.no_image).into(this)
+    Glide.with(this.context)
+        .load(url ?: R.drawable.no_image)
+        .placeholder(R.drawable.default_image)
+        .into(this)
 }
