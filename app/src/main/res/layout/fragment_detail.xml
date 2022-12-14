@@ -9,11 +9,6 @@
         <variable
             name="detail_vm"
             type="project.seo.pictureviewer.ui.detail.DetailViewModel" />
-
-        <variable
-            name="detail_fragment"
-            type="project.seo.pictureviewer.ui.detail.DetailFragment" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -117,7 +112,7 @@
             android:id="@+id/urlValue"
             style="@style/MainValueStyle"
             android:layout_marginStart="10dp"
-            android:onClick="@{() -> detail_fragment.showWebPage(detail_vm.pictureDetail.url)}"
+            android:onClick="@{() -> detail_vm.showWebPage()}"
             android:text="@{detail_vm.pictureDetail.url}"
             app:layout_constraintBottom_toBottomOf="@+id/url_label"
             app:layout_constraintStart_toEndOf="@+id/url_label"
