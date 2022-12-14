@@ -8,129 +8,44 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
-import androidx.lifecycle.coroutineScope
-import coil.load
-import kotlinx.coroutines.CoroutineScope
-import project.seo.pictureviewer.R
+import androidx.fragment.app.viewModels
 import project.seo.pictureviewer.databinding.FragmentDetailBinding
 
-class DetailFragment(
-) : Fragment(), DetailContract.View {
+class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
-    private lateinit var presenter: DetailContract.Presenter
+    private val viewModel: DetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentDetailBinding.inflate(layoutInflater, container, false)
-        presenter = DetailPresenter(this, arguments?.getInt(PICTURE_ID) ?: 0)
+        viewModel.updateId(arguments?.getInt(PICTURE_KEY) ?: 0)
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.start()
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override val lifecycleScope: CoroutineScope
-        get() = lifecycle.coroutineScope
-
-    override fun showPicture(url: String) {
-        binding.detailImage.load(url)
-    }
-
-    override fun showId(id: Int) {
-        binding.idValue.text = "$id"
-    }
-
-    override fun showAuthor(author: String) {
-        binding.authorValue.text = author
-    }
-
-    override fun showWidth(width: String) {
-        binding.widthValue.text = width
-    }
-
-    override fun showHeight(height: String) {
-        binding.heightValue.text = height
-    }
-
-    override fun showUrl(url: String) {
-        binding.urlValue.text = url
-    }
-
-    override fun showDownloadUrl(downloadUrl: String) {
-        binding.downloadValue.text = downloadUrl
-    }
-
-    override fun showErrorToast(message: String) {
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showPreviousPreview(url: String, pictureId: Int) {
-        with(binding.previousPicture) {
-            load(url)
-            setOnClickListener {
-                changePage(pictureId)
-            }
+        with(binding) {
+            detailVm = viewModel
+            detailFragment = this@DetailFragment
+            lifecycleOwner = viewLifecycleOwner
         }
+
+        viewModel.fetchDetail()
+        viewModel.error.observe(this.viewLifecycleOwner, EventObserver { message ->
+            Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
+        })
     }
 
-    override fun showCurrentPreview(url: String) {
-        binding.currentPicture.load(url)
-    }
-
-    override fun showNextPreview(url: String, pictureId: Int) {
-        with(binding.nextPicture) {
-            load(url)
-            setOnClickListener {
-                changePage(pictureId)
-            }
-        }
-    }
-
-    override fun showPictureWebSite(url: Uri) {
-        binding.urlValue.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, url))
-        }
-    }
-
-    override fun showNextPage(id: Int) {
-        binding.nextPage.setOnClickListener {
-            changePage(id)
-        }
-    }
-
-    override fun showPreviousPage(id: Int) {
-        binding.backPage.setOnClickListener {
-            changePage(id)
-        }
-    }
-
-    override fun showPreviousNoImage(id: Int) {
-        binding.previousPicture.load(id)
-    }
-
-    override fun showNextNoImage(id: Int) {
-        binding.nextPicture.load(id)
-    }
-
-    override fun changePage(pictureId: Int) {
-        parentFragmentManager.commit {
-            replace<DetailFragment>(
-                R.id.container, args = Bundle().apply {
-                    putInt(PICTURE_ID, pictureId)
-                }
-            )
-        }
+    fun showWebPage(url: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
     companion object {
-        const val PICTURE_ID = "pictureId"
+        const val PICTURE_KEY = "pictureId"
     }
 }

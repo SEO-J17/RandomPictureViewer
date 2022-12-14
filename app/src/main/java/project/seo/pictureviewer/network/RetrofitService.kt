@@ -9,6 +9,8 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitService {
     private const val requestUrl = "https://picsum.photos"
+    const val startPage = 1
+    const val endPage = 100
 
     private val httpInterceptor = HttpLoggingInterceptor().apply {
         level = if (BuildConfig.DEBUG) {
@@ -33,7 +35,7 @@ object RetrofitService {
 
     private val api = retrofit.create(PicturesAPI::class.java)
 
-    suspend fun getPicture(page: Int = 1, limit: Int = 100) = api.getPicture(page, limit)
+    suspend fun getPicture(page: Int = startPage, limit: Int = endPage) = api.getPicture(page, limit)
 
     suspend fun getPictureData(id: Int) = api.getPictureData(id)
 
