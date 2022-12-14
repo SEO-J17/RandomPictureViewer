@@ -1,18 +1,18 @@
 package project.seo.pictureviewer.data
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 data class PictureData(
-    @SerializedName("id")
+    @Json(name = "id")
     val id: Int,
-    @SerializedName("author")
+    @Json(name = "author")
     val author: String,
-    @SerializedName("width")
+    @Json(name = "width")
     val width: String,
-    @SerializedName("height")
+    @Json(name = "height")
     val height: String,
-    @SerializedName("url")
+    @Json(name = "url")
     val url: String,
-    @SerializedName("download_url")
+    @Json(name = "download_url")
     val downloadUrl: String,
 )
