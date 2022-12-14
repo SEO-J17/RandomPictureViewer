@@ -1,17 +1,18 @@
 package project.seo.pictureviewer.ui.detail
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import java.util.concurrent.atomic.AtomicBoolean
 
 open class Event<out T>(private val content: T) {
-    var hasBeenHandled = false
-        private set
+    private var hasBeenHandled = AtomicBoolean(false)
 
     fun getContentIfNotHandled(): T? {
-        return if (hasBeenHandled) {
-            null
-        } else {
-            hasBeenHandled = true
+        return if (hasBeenHandled.compareAndSet(false, true)) {
             content
+        } else {
+            null
         }
     }
 
@@ -25,4 +26,11 @@ class EventObserver<T>(private val onEventUnhandledContent: (T) -> Unit) : Obser
             onEventUnhandledContent(value)
         }
     }
+}
+
+fun <T> LiveData<Event<T>>.observeEvent(
+    owner: LifecycleOwner,
+    onEventUnhandledContent: (T) -> Unit,
+) {
+    observe(owner, EventObserver(onEventUnhandledContent))
 }
