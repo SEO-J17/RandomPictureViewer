@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.data
+package project.seo.pictureviewer.network
 
 import com.squareup.moshi.Json
 
