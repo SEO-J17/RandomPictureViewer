@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.ui.detail
+package project.seo.pictureviewer.utils
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
