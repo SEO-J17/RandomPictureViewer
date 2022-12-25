@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.extensions
+package project.seo.pictureviewer.utils
 
 import android.view.View
 import androidx.lifecycle.LifecycleCoroutineScope
