@@ -6,13 +6,12 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import project.seo.pictureviewer.BuildConfig
 import retrofit2.Retrofit
+import retrofit2.awaitResponse
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
-object RetrofitService {
-    private const val requestUrl = "https://picsum.photos"
-    const val startPage = 1
-    const val endPage = 100
+object RemoteService {
+    private const val BASE_URL = "https://picsum.photos"
 
     private val httpInterceptor = HttpLoggingInterceptor().apply {
         level = if (BuildConfig.DEBUG) {
@@ -32,16 +31,20 @@ object RetrofitService {
 
     private val retrofit =
         Retrofit.Builder()
-            .baseUrl(requestUrl)
+            .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(client)
             .build()
 
     private val api = retrofit.create(PicturesAPI::class.java)
 
-    suspend fun getPicture(page: Int = startPage, limit: Int = endPage) =
-        api.getPicture(page, limit)
-
-    suspend fun getPictureData(id: Int) = api.getPictureData(id)
-
+    suspend fun getPicture(page: Int, limit: Int): Result<List<PictureResponse>> {
+        val response = api.getPicture(page, limit).awaitResponse()
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Result.success(it)
+            }
+        }
+        return Result.failure(Exception(response.message()))
+    }
 }
