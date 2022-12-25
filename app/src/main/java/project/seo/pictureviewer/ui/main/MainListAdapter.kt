@@ -1,13 +1,12 @@
 package project.seo.pictureviewer.ui.main
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import project.seo.pictureviewer.data.PictureData
+import androidx.paging.PagingDataAdapter
+import project.seo.pictureviewer.data.Picture
 
 class MainListAdapter(
-    private val dataSet: MutableList<PictureData> = mutableListOf(),
     private val itemClickListener: (Int) -> Unit,
-) : RecyclerView.Adapter<MainListViewHolder>() {
+) : PagingDataAdapter<Picture, MainListViewHolder>(Picture.diffUtil) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -15,19 +14,12 @@ class MainListAdapter(
     ): MainListViewHolder = MainListViewHolder(parent)
 
     override fun onBindViewHolder(holder: MainListViewHolder, position: Int) {
+        val pictures = getItem(position) ?: return
         with(holder) {
-            bind(dataSet[position])
+            bind(pictures)
             itemView.setOnClickListener {
-                itemClickListener(dataSet[position].id)
+                itemClickListener(pictures.id)
             }
         }
-    }
-
-    override fun getItemCount(): Int = dataSet.size
-
-    fun updatePictures(pictureInfo: List<PictureData>) {
-        dataSet.clear()
-        dataSet.addAll(pictureInfo)
-        notifyDataSetChanged()
     }
 }
