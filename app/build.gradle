@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.dagger.hilt.android'
     id 'org.jetbrains.kotlin.kapt'
 }
 
@@ -73,4 +74,11 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.4.3'
     // Paging
     implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
+    // Hilt
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
+}
+// Allow references to generated code
+kapt {
+    correctErrorTypes true
 }
