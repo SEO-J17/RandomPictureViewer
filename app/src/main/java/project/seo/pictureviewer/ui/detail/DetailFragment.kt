@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import project.seo.pictureviewer.databinding.FragmentDetailBinding
 import project.seo.pictureviewer.utils.observeEvent
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
     private val viewModel: DetailViewModel by viewModels()
@@ -48,9 +50,5 @@ class DetailFragment : Fragment() {
                 )
             }
         }
-    }
-
-    companion object {
-        const val PICTURE_KEY = "pictureId"
     }
 }
