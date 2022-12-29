@@ -8,8 +8,8 @@ import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 import project.seo.pictureviewer.R
 import project.seo.pictureviewer.data.Picture
-import project.seo.pictureviewer.extensions.coroutineScope
 import project.seo.pictureviewer.ui.main.MainListAdapter
+import project.seo.pictureviewer.utils.coroutineScope
 
 @BindingAdapter("bind:list")
 fun RecyclerView.setList(list: PagingData<Picture>) {
