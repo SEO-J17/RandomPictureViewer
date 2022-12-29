@@ -11,6 +11,9 @@ interface PictureDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: List<PictureEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertItem(entity: PictureEntity)
+
     @Delete
     suspend fun deleteAll(entity: PictureEntity)
 
