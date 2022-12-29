@@ -5,17 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
-import project.seo.pictureviewer.R
+import dagger.hilt.android.AndroidEntryPoint
 import project.seo.pictureviewer.databinding.FragmentMainBinding
-import project.seo.pictureviewer.ui.detail.DetailFragment
+import project.seo.pictureviewer.navigator.AppNavigator
+import project.seo.pictureviewer.navigator.Screens
 import project.seo.pictureviewer.utils.RecyclerViewItemDecorator
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
     private val viewModel: MainViewModel by viewModels()
+
+    @Inject
+    lateinit var navigator: AppNavigator
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,14 +37,7 @@ class MainFragment : Fragment() {
             vm = viewModel
             lifecycleOwner = viewLifecycleOwner
             recyclerView.adapter = MainListAdapter { pictureId ->
-                parentFragmentManager.commit {
-                    replace<DetailFragment>(
-                        R.id.container, args = Bundle().apply {
-                            putInt(DetailFragment.PICTURE_KEY, pictureId)
-                        }
-                    )
-                    addToBackStack(null)
-                }
+                navigator.navigateTo(pictureId, Screens.DETAIL)
             }
             recyclerView.addItemDecoration(RecyclerViewItemDecorator())
         }
