@@ -2,17 +2,27 @@ package project.seo.pictureviewer.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineExceptionHandler
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import project.seo.pictureviewer.data.PictureData
-import project.seo.pictureviewer.network.RetrofitService
-import retrofit2.HttpException
+import project.seo.pictureviewer.data.DetailRepository
+import project.seo.pictureviewer.data.Picture
+import project.seo.pictureviewer.navigator.AppNavigator
+import project.seo.pictureviewer.utils.Event
+import javax.inject.Inject
 
-class DetailViewModel : ViewModel() {
-    private val _pictureDetail = MutableLiveData<PictureData>()
-    val pictureDetail: LiveData<PictureData> = _pictureDetail
+@HiltViewModel
+class DetailViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    private val repository: DetailRepository,
+) : ViewModel() {
+
+    private var pictureId = savedStateHandle.get<Int>(AppNavigator.PICTURE_KEY) ?: 0
+
+    private val _pictureDetail = MutableLiveData<Picture>()
+    val pictureDetail: LiveData<Picture> = _pictureDetail
 
     private val _previousPreview = MutableLiveData<String?>()
     val previousPreview: LiveData<String?> = _previousPreview
@@ -27,32 +37,28 @@ class DetailViewModel : ViewModel() {
     val webPage: LiveData<Event<Boolean>> = _webPage
 
     fun fetchDetail() {
-        viewModelScope.launch(exceptionHandler()) {
-            _pictureDetail.postValue(RetrofitService.getPictureData(PICTURE_ID))
-            setPreviousPreview(PICTURE_ID - 1)
-            setNextPreview(PICTURE_ID + 1)
+        viewModelScope.launch {
+            repository.getDetail(pictureId)?.let {
+                _pictureDetail.postValue(it)
+                setPreviousPreview(pictureId - 1)
+                setNextPreview(pictureId + 1)
+            } ?: run {
+                _error.value = Event("존재 하지 않는 이미지 입니다.")
+            }
         }
     }
 
     private suspend fun setPreviousPreview(pictureId: Int) {
-        try {
-            _previousPreview.postValue(RetrofitService.getPictureData(pictureId).downloadUrl)
-        } catch (e: HttpException) {
-            _previousPreview.value = null
-        }
+        _previousPreview.postValue(repository.getDetail(pictureId)?.downloadUrl)
     }
 
     private suspend fun setNextPreview(pictureId: Int) {
-        try {
-            _nextPreview.postValue(RetrofitService.getPictureData(pictureId).downloadUrl)
-        } catch (e: HttpException) {
-            _nextPreview.value = null
-        }
+        _nextPreview.postValue(repository.getDetail(pictureId)?.downloadUrl)
     }
 
-    fun updateId(pictureId: Int) {
-        if (pictureId in 0 until 100) {
-            PICTURE_ID = pictureId
+    private fun updateId(id: Int) {
+        if (id >= 0) {
+            pictureId = id
             isValid(true)
         } else {
             isValid(false)
@@ -72,24 +78,11 @@ class DetailViewModel : ViewModel() {
     }
 
     fun previousPage() {
-        updateId(PICTURE_ID - 1)
+        updateId(pictureId - 1)
     }
 
     fun nextPage() {
-        updateId(PICTURE_ID + 1)
+        updateId(pictureId + 1)
     }
 
-    private fun exceptionHandler(): CoroutineExceptionHandler {
-        return CoroutineExceptionHandler { _, throwable ->
-            throwable.printStackTrace()
-            when (throwable) {
-                is HttpException -> _error.value = Event("네트워크 오류. 다시 시도해주세요")
-                else -> _error.value = Event("이미지를 불러올 수 없습니다. \n다시 시도해 주세요.")
-            }
-        }
-    }
-
-    companion object {
-        private var PICTURE_ID = 0
-    }
 }
