@@ -1,11 +1,13 @@
 package project.seo.pictureviewer
 
 import android.app.Application
-import project.seo.pictureviewer.database.LocalService
+import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
 
+@HiltAndroidApp
 class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        LocalService.create(applicationContext)
+        Timber.plant(Timber.DebugTree())
     }
 }
