@@ -9,7 +9,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import project.seo.pictureviewer.BuildConfig
-import project.seo.pictureviewer.network.PicturesAPI
+import project.seo.pictureviewer.data.network.PicturesAPI
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit

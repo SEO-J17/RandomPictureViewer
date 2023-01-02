@@ -7,13 +7,13 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import project.seo.pictureviewer.data.MainRepository
 import project.seo.pictureviewer.data.Picture
+import project.seo.pictureviewer.data.PictureRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    repository: MainRepository,
+    repository: PictureRepository,
 ) : ViewModel() {
     val pictureList: LiveData<PagingData<Picture>> =
         repository

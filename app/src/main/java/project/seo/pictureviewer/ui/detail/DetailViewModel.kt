@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import project.seo.pictureviewer.data.DetailRepository
 import project.seo.pictureviewer.data.Picture
+import project.seo.pictureviewer.data.PictureRepository
 import project.seo.pictureviewer.navigator.AppNavigator
 import project.seo.pictureviewer.utils.Event
 import javax.inject.Inject
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val repository: DetailRepository,
+    private val repository: PictureRepository,
 ) : ViewModel() {
 
     private var pictureId = savedStateHandle.get<Int>(AppNavigator.PICTURE_KEY) ?: 0

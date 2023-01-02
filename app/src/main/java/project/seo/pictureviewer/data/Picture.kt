@@ -1,8 +1,8 @@
 package project.seo.pictureviewer.data
 
 import androidx.recyclerview.widget.DiffUtil
-import project.seo.pictureviewer.database.PictureEntity
-import project.seo.pictureviewer.network.PictureResponse
+import project.seo.pictureviewer.data.database.PictureEntity
+import project.seo.pictureviewer.data.network.PictureResponse
 
 data class Picture(
     val id: Int,

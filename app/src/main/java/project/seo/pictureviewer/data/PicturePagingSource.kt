@@ -2,9 +2,9 @@ package project.seo.pictureviewer.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import project.seo.pictureviewer.database.PictureDao
-import project.seo.pictureviewer.database.PictureEntity
-import project.seo.pictureviewer.network.PicturesAPI
+import project.seo.pictureviewer.data.database.PictureDao
+import project.seo.pictureviewer.data.database.PictureEntity
+import project.seo.pictureviewer.data.network.PicturesAPI
 import retrofit2.awaitResponse
 
 class PicturePagingSource(
