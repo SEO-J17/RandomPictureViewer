@@ -4,12 +4,11 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import project.seo.pictureviewer.data.database.PictureDao
 import project.seo.pictureviewer.data.database.PictureEntity
-import project.seo.pictureviewer.data.network.PicturesAPI
-import retrofit2.awaitResponse
+import project.seo.pictureviewer.data.network.ResponseService
 
 class PicturePagingSource(
     private val localService: PictureDao,
-    private val remoteService: PicturesAPI,
+    private val remoteService: ResponseService,
 ) : PagingSource<Int, Picture>() {
     override fun getRefreshKey(state: PagingState<Int, Picture>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -20,28 +19,20 @@ class PicturePagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Picture> {
         val page = params.key ?: STARTING_PAGE
-        runCatching {
-            remoteService.getPicture(page, params.loadSize).awaitResponse()
-        }.onSuccess { response ->
-            response.body()?.let { pictures ->
-                localService.insert(
-                    pictures.map { data ->
-                        PictureEntity(
-                            id = data.id,
-                            author = data.author,
-                            width = data.width,
-                            height = data.height,
-                            url = data.url,
-                            downloadUrl = data.downloadUrl
-                        )
-                    }
-                )
-                return LoadResult.Page(
-                    data = Picture(pictures),
-                    prevKey = if (page == STARTING_PAGE) null else page - 1,
-                    nextKey = if (pictures.isEmpty() || pictures.size < params.loadSize) null else page + 1
-                )
-            }
+        val pictures = remoteService.getPictures(page, params.loadSize)
+        if (pictures != null) {
+            localService.insert(
+                pictures.map { data ->
+                    PictureEntity(
+                        id = data.id,
+                        author = data.author,
+                        width = data.width,
+                        height = data.height,
+                        url = data.url,
+                        downloadUrl = data.downloadUrl
+                    )
+                }
+            )
         }
         val offset = (page - 1) * params.loadSize
         val local = localService.getAll(offset, params.loadSize)
