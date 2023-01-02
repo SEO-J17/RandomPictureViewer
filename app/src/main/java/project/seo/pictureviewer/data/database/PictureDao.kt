@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PictureDao {
@@ -24,6 +25,6 @@ interface PictureDao {
     suspend fun getAll(offset: Int, limit: Int): List<PictureEntity>
 
     @Query("SELECT * FROM pictures WHERE id = :id")
-    suspend fun getItem(id: Int): PictureEntity?
+    fun getItem(id: Int): Flow<PictureEntity>?
 
 }
