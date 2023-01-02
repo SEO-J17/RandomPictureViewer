@@ -44,7 +44,8 @@ class DetailFragment : Fragment() {
 
             webPage.observeEvent(viewLifecycleOwner) {
                 startActivity(
-                    Intent(Intent.ACTION_VIEW,
+                    Intent(
+                        Intent.ACTION_VIEW,
                         Uri.parse(pictureDetail.value?.url)
                     )
                 )
