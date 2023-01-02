@@ -18,8 +18,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
-    private const val BASE_URL = "https://picsum.photos"
     private const val TIME_LIMIT = 10L
+
+    @Singleton
+    @Provides
+    fun provideBaseUrl(): String {
+        return "https://picsum.photos"
+    }
 
     @Singleton
     @Provides
@@ -50,8 +55,12 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
-        return Retrofit.Builder().baseUrl(BASE_URL)
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        moshi: Moshi,
+        url: String,
+    ): Retrofit {
+        return Retrofit.Builder().baseUrl(url)
             .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient).build()
     }
 
