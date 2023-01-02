@@ -6,7 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import project.seo.pictureviewer.data.Picture
 import project.seo.pictureviewer.data.PictureRepository
 import project.seo.pictureviewer.navigator.AppNavigator
@@ -37,23 +38,23 @@ class DetailViewModel @Inject constructor(
     val webPage: LiveData<Event<Boolean>> = _webPage
 
     fun fetchDetail() {
-        viewModelScope.launch {
-            repository.getDetail(pictureId)?.let {
-                _pictureDetail.postValue(it)
-                setPreviousPreview(pictureId - 1)
-                setNextPreview(pictureId + 1)
-            } ?: run {
-                _error.value = Event("존재 하지 않는 이미지 입니다.")
-            }
-        }
+        repository.getDetail(pictureId).onEach {
+            _pictureDetail.value = it
+            setPreviousPreview(pictureId - 1)
+            setNextPreview(pictureId + 1)
+        }.launchIn(viewModelScope)
     }
 
-    private suspend fun setPreviousPreview(pictureId: Int) {
-        _previousPreview.postValue(repository.getDetail(pictureId)?.downloadUrl)
+    private fun setPreviousPreview(pictureId: Int) {
+        repository.getDetail(pictureId).onEach {
+            _previousPreview.value = it?.downloadUrl
+        }.launchIn(viewModelScope)
     }
 
-    private suspend fun setNextPreview(pictureId: Int) {
-        _nextPreview.postValue(repository.getDetail(pictureId)?.downloadUrl)
+    private fun setNextPreview(pictureId: Int) {
+        repository.getDetail(pictureId).onEach {
+            _nextPreview.value = it?.downloadUrl
+        }.launchIn(viewModelScope)
     }
 
     private fun updateId(id: Int) {
