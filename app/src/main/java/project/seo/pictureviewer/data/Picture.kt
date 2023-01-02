@@ -40,6 +40,7 @@ data class Picture(
             )
         }
 
+        @JvmName("ResponseToList")
         operator fun invoke(response: List<PictureResponse>): List<Picture> {
             return response.map {
                 invoke(it)
