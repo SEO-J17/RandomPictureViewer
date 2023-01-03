@@ -5,14 +5,14 @@ import androidx.databinding.BindingAdapter
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import io.github.seoj17.doamain.model.DomainPicture
 import kotlinx.coroutines.launch
 import project.seo.pictureviewer.R
-import project.seo.pictureviewer.data.Picture
 import project.seo.pictureviewer.ui.main.MainListAdapter
 import project.seo.pictureviewer.utils.coroutineScope
 
 @BindingAdapter("bind:list")
-fun RecyclerView.setList(list: PagingData<Picture>) {
+fun RecyclerView.setList(list: PagingData<DomainPicture>) {
     coroutineScope?.launch {
         (adapter as? MainListAdapter)?.submitData(list)
     }

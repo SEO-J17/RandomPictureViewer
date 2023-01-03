@@ -6,23 +6,23 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.seoj17.doamain.model.DomainPicture
+import io.github.seoj17.doamain.usecase.GetDetailUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import project.seo.pictureviewer.data.Picture
-import project.seo.pictureviewer.data.PictureRepository
 import project.seo.pictureviewer.utils.Event
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val repository: PictureRepository,
+    private val getDetailUseCase: GetDetailUseCase,
 ) : ViewModel() {
 
     private var pictureId = savedStateHandle.get<Int>(PICTURE_KEY) ?: 0
 
-    private val _pictureDetail = MutableLiveData<Picture>()
-    val pictureDetail: LiveData<Picture> = _pictureDetail
+    private val _pictureDetail = MutableLiveData<DomainPicture>()
+    val pictureDetail: LiveData<DomainPicture> = _pictureDetail
 
     private val _previousPreview = MutableLiveData<String?>()
     val previousPreview: LiveData<String?> = _previousPreview
@@ -37,7 +37,7 @@ class DetailViewModel @Inject constructor(
     val webPage: LiveData<Event<Boolean>> = _webPage
 
     fun fetchDetail() {
-        repository.getDetail(pictureId).onEach {
+        getDetailUseCase(pictureId).onEach {
             _pictureDetail.value = it
             setPreviousPreview(pictureId - 1)
             setNextPreview(pictureId + 1)
@@ -45,13 +45,13 @@ class DetailViewModel @Inject constructor(
     }
 
     private fun setPreviousPreview(pictureId: Int) {
-        repository.getDetail(pictureId).onEach {
+        getDetailUseCase(pictureId).onEach {
             _previousPreview.value = it?.downloadUrl
         }.launchIn(viewModelScope)
     }
 
     private fun setNextPreview(pictureId: Int) {
-        repository.getDetail(pictureId).onEach {
+        getDetailUseCase(pictureId).onEach {
             _nextPreview.value = it?.downloadUrl
         }.launchIn(viewModelScope)
     }
