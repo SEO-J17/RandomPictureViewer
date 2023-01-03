@@ -1,19 +1,23 @@
-package project.seo.pictureviewer.data
+package io.github.seoj17.data
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import io.github.seoj17.data.database.PictureDao
+import io.github.seoj17.data.mapper.entityToDomainModel
+import io.github.seoj17.data.mapper.responseToDomainModel
+import io.github.seoj17.data.mapper.responseToEntity
+import io.github.seoj17.data.network.ResponseService
+import io.github.seoj17.doamain.model.DomainPicture
+import io.github.seoj17.doamain.repository.PictureRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import project.seo.pictureviewer.data.database.PictureDao
-import project.seo.pictureviewer.data.database.PictureEntity
-import project.seo.pictureviewer.data.network.ResponseService
 import javax.inject.Inject
 
 class PictureRepositoryImpl @Inject constructor(
     private val remoteService: ResponseService,
     private val localService: PictureDao,
 ) : PictureRepository {
-    override fun fetchPictures(): Pager<Int, Picture> {
+    override fun fetchPictures(): Pager<Int, DomainPicture> {
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,
@@ -25,26 +29,19 @@ class PictureRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun getDetail(id: Int): Flow<Picture?> {
+    override fun getDetail(id: Int): Flow<DomainPicture?> {
         return flow {
             localService.getItem(id)?.let {
                 runCatching {
                     it.collect { entity ->
-                        emit(Picture(entity))
+                        emit(entityToDomainModel(entity))
                     }
                 }
             } ?: run {
-                remoteService.getPictureData(id)?.let { data ->
-                    emit(Picture(data))
+                remoteService.getPictureData(id)?.let { response ->
+                    emit(responseToDomainModel(response))
                     localService.insertItem(
-                        PictureEntity(
-                            id = data.id,
-                            author = data.author,
-                            width = data.width,
-                            height = data.height,
-                            url = data.url,
-                            downloadUrl = data.downloadUrl
-                        )
+                        responseToEntity(response)
                     )
                 }
             }

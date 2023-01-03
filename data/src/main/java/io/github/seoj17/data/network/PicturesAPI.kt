@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.data.network
+package io.github.seoj17.data.network
 
 import retrofit2.Call
 import retrofit2.http.GET

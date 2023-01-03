@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.data.network
+package io.github.seoj17.data.network
 
 import retrofit2.awaitResponse
 import javax.inject.Inject
