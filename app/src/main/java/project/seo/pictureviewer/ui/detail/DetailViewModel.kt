@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import project.seo.pictureviewer.data.Picture
 import project.seo.pictureviewer.data.PictureRepository
-import project.seo.pictureviewer.navigator.AppNavigator
 import project.seo.pictureviewer.utils.Event
 import javax.inject.Inject
 
@@ -20,7 +19,7 @@ class DetailViewModel @Inject constructor(
     private val repository: PictureRepository,
 ) : ViewModel() {
 
-    private var pictureId = savedStateHandle.get<Int>(AppNavigator.PICTURE_KEY) ?: 0
+    private var pictureId = savedStateHandle.get<Int>(PICTURE_KEY) ?: 0
 
     private val _pictureDetail = MutableLiveData<Picture>()
     val pictureDetail: LiveData<Picture> = _pictureDetail
@@ -86,4 +85,7 @@ class DetailViewModel @Inject constructor(
         updateId(pictureId + 1)
     }
 
+    companion object {
+        private const val PICTURE_KEY = "pictureId"
+    }
 }
