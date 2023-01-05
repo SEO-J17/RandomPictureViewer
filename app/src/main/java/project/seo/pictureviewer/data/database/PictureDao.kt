@@ -1,11 +1,9 @@
 package project.seo.pictureviewer.data.database
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PictureDao {
@@ -13,18 +11,18 @@ interface PictureDao {
     suspend fun insert(entity: List<PictureEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertItem(entity: PictureEntity)
+    suspend fun insert(entity: PictureEntity)
 
-    @Delete
-    suspend fun deleteAll(entity: PictureEntity)
+    @Query("DELETE FROM pictures")
+    suspend fun delete()
 
     @Query("DELETE FROM pictures WHERE id = :id")
-    suspend fun deleteItem(id: Int)
+    suspend fun delete(id: Int)
 
     @Query("SELECT * FROM pictures ORDER BY id ASC LIMIT :limit OFFSET :offset")
-    suspend fun getAll(offset: Int, limit: Int): List<PictureEntity>
+    suspend fun getPicture(offset: Int, limit: Int): List<PictureEntity>
 
     @Query("SELECT * FROM pictures WHERE id = :id")
-    fun getItem(id: Int): Flow<PictureEntity>?
+    suspend fun getPicture(id: Int): PictureEntity?
 
 }
