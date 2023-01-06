@@ -37,9 +37,7 @@ class MainFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             recyclerView.adapter = MainListAdapter { pictureId ->
                 navigator.navigate(
-                    MainFragmentDirections.actionMainFragmentToDetailFragment(
-                        pictureId
-                    )
+                    MainFragmentDirections.actionMainFragmentToDetailFragment(pictureId)
                 )
             }
             recyclerView.addItemDecoration(RecyclerViewItemDecorator())
