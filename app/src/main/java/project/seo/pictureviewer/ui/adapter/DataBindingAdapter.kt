@@ -20,6 +20,7 @@ fun RecyclerView.setList(list: PagingData<Picture>) {
 
 @BindingAdapter("bind:imgUrl")
 fun ImageView.setImage(url: String?) {
+    this.clipToOutline = true
     Glide.with(this.context)
         .load(url ?: R.drawable.no_image)
         .placeholder(R.drawable.default_image)
