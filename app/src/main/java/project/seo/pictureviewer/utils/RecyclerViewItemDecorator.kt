@@ -2,43 +2,36 @@ package project.seo.pictureviewer.utils
 
 import android.graphics.Rect
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerViewItemDecorator : RecyclerView.ItemDecoration() {
+class RecyclerViewItemDecorator(
+    private val heightSpace: Int = 20,
+    private val widthSpace: Int = 10
+) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
         view: View,
         parent: RecyclerView,
         state: RecyclerView.State,
     ) {
+        super.getItemOffsets(outRect, view, parent, state)
+
         val position = parent.getChildAdapterPosition(view)
         val itemCount = state.itemCount
+        val layoutManager = parent.layoutManager as? GridLayoutManager ?: return
+        val layoutParams = view.layoutParams as? GridLayoutManager.LayoutParams ?: return
+        val spanCount = layoutManager.spanCount
+        val spanIndex = layoutParams.spanIndex
 
         with(outRect) {
-            when (position) {
-                0 -> {
-                    bottom = 10
-                    right = 5
-                }
-                1 -> {
-                    bottom = 10
-                    left = 5
-                }
-                itemCount - 1 -> {
-                    left = 5
-                }
-                itemCount - 2 -> {
-                    right = 5
-                }
-                else -> {
-                    if (position % 2 == 0) {
-                        bottom = 10
-                        right = 5
-                    } else {
-                        bottom = 10
-                        left = 5
-                    }
-                }
+            top = heightSpace
+            if (spanIndex == 0) {
+                left = widthSpace * 2
+                right = widthSpace
+            } else {
+                right = widthSpace * 2
+                left = widthSpace
             }
         }
     }
