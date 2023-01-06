@@ -6,22 +6,22 @@ import javax.inject.Inject
 class ResponseService @Inject constructor(
     private val responseApi: PicturesAPI,
 ) {
-    suspend fun getPictures(page: Int, limit: Int): List<PictureResponse>? {
+    suspend fun getPictures(page: Int, limit: Int): List<PictureResponse> {
         return runCatching {
             responseApi.getPicture(page, limit).awaitResponse()
         }.fold(
             onSuccess = {
-                it.body()
+                it.body().orEmpty()
             },
             onFailure = {
-                null
-            },
+                emptyList()
+            }
         )
     }
 
-    suspend fun getPictureData(id: Int): PictureResponse? {
+    suspend fun getPictures(id: Int): PictureResponse? {
         return runCatching {
-            responseApi.getPictureData(id).awaitResponse()
+            responseApi.getPicture(id).awaitResponse()
         }.fold(
             onSuccess = {
                 it.body()
