@@ -13,7 +13,7 @@ interface PicturesAPI {
     ): Call<List<PictureResponse>>
 
     @GET("/id/{id}/info")
-    fun getPictureData(
+    fun getPicture(
         @Path("id") id: Int,
     ): Call<PictureResponse>
 }
