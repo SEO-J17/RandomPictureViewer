@@ -37,11 +37,9 @@ class DetailFragment : Fragment() {
         }
 
         with(viewModel) {
-            fetchDetail()
             error.observeEvent(viewLifecycleOwner) { message ->
                 Toast.makeText(this@DetailFragment.context, message, Toast.LENGTH_SHORT).show()
             }
-
             webPage.observeEvent(viewLifecycleOwner) {
                 startActivity(
                     Intent(
@@ -50,6 +48,7 @@ class DetailFragment : Fragment() {
                     )
                 )
             }
+            fetchDetail()
         }
     }
 }
