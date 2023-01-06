@@ -13,18 +13,46 @@ android {
         applicationId "project.seo.pictureviewer"
         minSdk 26
         targetSdk 32
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            minifyEnabled false
+            debuggable true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "version"
+    productFlavors {
+        //개발용
+        dev {
+            dimension "version"
+            applicationIdSuffix = ".dev"
+            versionCode 1
+            versionName "1.0"
+            manifestPlaceholders = [
+                    appLabel: "RandomPictureViewer_Dev"
+            ]
+            versionNameSuffix "-dev"
+        }
+        //실제 배포용
+        prod {
+            dimension "version"
+            applicationIdSuffix = ".prod"
+            versionCode 2
+            versionName "1.0.1"
+            manifestPlaceholders = [
+                    appLabel: "RandomPictureViewer_Prod"
+            ]
+            versionNameSuffix "-prod"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
