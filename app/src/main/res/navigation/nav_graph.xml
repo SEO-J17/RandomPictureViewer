@@ -16,9 +16,6 @@
         android:id="@+id/detailFragment"
         android:name="project.seo.pictureviewer.ui.detail.DetailFragment"
         android:label="DetailFragment">
-        <action
-            android:id="@+id/action_detailFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
         <argument
             android:name="pictureId"
             app:argType="integer" />
