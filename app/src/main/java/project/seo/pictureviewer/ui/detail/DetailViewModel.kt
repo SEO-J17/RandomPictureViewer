@@ -6,8 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import project.seo.pictureviewer.data.Picture
 import project.seo.pictureviewer.data.PictureRepository
 import project.seo.pictureviewer.utils.Event
@@ -19,7 +18,7 @@ class DetailViewModel @Inject constructor(
     private val repository: PictureRepository,
 ) : ViewModel() {
 
-    private var pictureId = savedStateHandle.get<Int>(PICTURE_KEY) ?: 0
+    private var pictureId = DetailFragmentArgs.fromSavedStateHandle(savedStateHandle).pictureId
 
     private val _pictureDetail = MutableLiveData<Picture>()
     val pictureDetail: LiveData<Picture> = _pictureDetail
@@ -37,23 +36,19 @@ class DetailViewModel @Inject constructor(
     val webPage: LiveData<Event<Boolean>> = _webPage
 
     fun fetchDetail() {
-        repository.getDetail(pictureId).onEach {
-            _pictureDetail.value = it
+        viewModelScope.launch {
+            _pictureDetail.postValue(repository.getDetail(pictureId))
             setPreviousPreview(pictureId - 1)
             setNextPreview(pictureId + 1)
-        }.launchIn(viewModelScope)
+        }
     }
 
-    private fun setPreviousPreview(pictureId: Int) {
-        repository.getDetail(pictureId).onEach {
-            _previousPreview.value = it?.downloadUrl
-        }.launchIn(viewModelScope)
+    private suspend fun setPreviousPreview(pictureId: Int) {
+        _previousPreview.postValue(repository.getDetail(pictureId)?.downloadUrl)
     }
 
-    private fun setNextPreview(pictureId: Int) {
-        repository.getDetail(pictureId).onEach {
-            _nextPreview.value = it?.downloadUrl
-        }.launchIn(viewModelScope)
+    private suspend fun setNextPreview(pictureId: Int) {
+        _nextPreview.postValue(repository.getDetail(pictureId)?.downloadUrl)
     }
 
     private fun updateId(id: Int) {
@@ -83,9 +78,5 @@ class DetailViewModel @Inject constructor(
 
     fun nextPage() {
         updateId(pictureId + 1)
-    }
-
-    companion object {
-        private const val PICTURE_KEY = "pictureId"
     }
 }
