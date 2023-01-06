@@ -1,6 +1,7 @@
 package project.seo.pictureviewer
 
 import android.app.Application
+import androidx.databinding.library.baseAdapters.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
@@ -8,6 +9,8 @@ import timber.log.Timber
 class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(Timber.DebugTree())
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 }
