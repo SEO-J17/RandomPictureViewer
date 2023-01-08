@@ -2,8 +2,6 @@ package project.seo.pictureviewer.data
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import project.seo.pictureviewer.data.database.PictureDao
 import project.seo.pictureviewer.data.database.PictureEntity
 import project.seo.pictureviewer.data.network.ResponseService
@@ -25,18 +23,13 @@ class PictureRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun getDetail(id: Int): Flow<Picture?> {
-        return flow {
-            localService.getItem(id)?.let {
-                runCatching {
-                    it.collect { entity ->
-                        emit(Picture(entity))
-                    }
-                }
-            } ?: run {
-                remoteService.getPictureData(id)?.let { data ->
-                    emit(Picture(data))
-                    localService.insertItem(
+    override suspend fun getDetail(id: Int): Picture? {
+        return localService.getPicture(id)?.let {
+            Picture(it)
+        } ?: run {
+            remoteService.getPictures(id)?.let { data ->
+                Picture(data).also {
+                    localService.insert(
                         PictureEntity(
                             id = data.id,
                             author = data.author,
