@@ -35,9 +35,6 @@ android {
             applicationIdSuffix = ".dev"
             versionCode 1
             versionName "1.0"
-            manifestPlaceholders = [
-                    appLabel: "RandomPictureViewer_Dev"
-            ]
             versionNameSuffix "-dev"
         }
         //실제 배포용
@@ -46,9 +43,6 @@ android {
             applicationIdSuffix = ".prod"
             versionCode 2
             versionName "1.0.1"
-            manifestPlaceholders = [
-                    appLabel: "RandomPictureViewer_Prod"
-            ]
             versionNameSuffix "-prod"
         }
     }
