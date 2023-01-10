@@ -1,30 +1,23 @@
 package project.seo.pictureviewer.ui.main
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import project.seo.pictureviewer.data.PictureInfo
-import project.seo.pictureviewer.network.RetrofitService
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.liveData
+import dagger.hilt.android.lifecycle.HiltViewModel
+import project.seo.pictureviewer.data.Picture
+import project.seo.pictureviewer.data.PictureRepository
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
-
-    private val _isLoading = MutableLiveData(true)
-    val isLoading: LiveData<Boolean> = _isLoading
-
-    private val _pictureList = MutableLiveData<PictureInfo>(emptyList())
-    val pictureList: LiveData<PictureInfo> = _pictureList
-
-    fun start() {
-        _isLoading.value = true
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                _pictureList.postValue(RetrofitService.getPicture())
-            }
-            _isLoading.value = false
-        }
-    }
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    repository: PictureRepository,
+) : ViewModel() {
+    val pictureList: LiveData<PagingData<Picture>> =
+        repository
+            .fetchPictures()
+            .liveData
+            .cachedIn(viewModelScope)
 }

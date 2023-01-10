@@ -1,21 +1,21 @@
-package project.seo.pictureviewer.ui.adapter
+package project.seo.pictureviewer.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import project.seo.pictureviewer.data.PictureData
+import project.seo.pictureviewer.data.Picture
 import project.seo.pictureviewer.databinding.ListItemBinding
 
-class ListViewHolder(
+class MainListViewHolder(
     private val binding: ListItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(pictureData: PictureData) {
+    fun bind(pictureData: Picture) {
         binding.data = pictureData
     }
 
     companion object {
-        operator fun invoke(parent: ViewGroup): ListViewHolder {
-            return ListViewHolder(
+        operator fun invoke(parent: ViewGroup): MainListViewHolder {
+            return MainListViewHolder(
                 ListItemBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )

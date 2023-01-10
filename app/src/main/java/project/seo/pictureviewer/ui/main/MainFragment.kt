@@ -4,16 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.*
-import project.seo.pictureviewer.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import dagger.hilt.android.AndroidEntryPoint
 import project.seo.pictureviewer.databinding.FragmentMainBinding
-import project.seo.pictureviewer.ui.adapter.ListAdapter
 import project.seo.pictureviewer.utils.RecyclerViewItemDecorator
-import project.seo.pictureviewer.ui.detail.DetailFragment
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
     private val viewModel: MainViewModel by viewModels()
+    private lateinit var navigator: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,24 +30,17 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navigator = Navigation.findNavController(view)
+
         with(binding) {
             vm = viewModel
             lifecycleOwner = viewLifecycleOwner
-            viewModel.start()
-
-            recyclerView.adapter = ListAdapter { pictureId ->
-                parentFragmentManager.commit {
-                    replace<DetailFragment>(
-                        R.id.container, args = Bundle().apply {
-                            putInt(DetailFragment.PICTURE_KEY, pictureId)
-                        }
-                    )
-                    addToBackStack(null)
-                }
+            recyclerView.adapter = MainListAdapter { pictureId ->
+                navigator.navigate(
+                    MainFragmentDirections.actionMainFragmentToDetailFragment(pictureId)
+                )
             }
             recyclerView.addItemDecoration(RecyclerViewItemDecorator())
         }
-
-
     }
 }

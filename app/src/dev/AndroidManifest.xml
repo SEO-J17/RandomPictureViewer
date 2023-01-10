@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="project.seo.pictureviewer">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".dev.DevApplication"
+        tools:replace="android:name" />
+
+</manifest>
