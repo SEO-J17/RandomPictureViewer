@@ -26,5 +26,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             bind:imgUrl="@{data.downloadUrl}" />
+
+        <View
+            android:id="@+id/author_label_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/author_label_round"
+            app:layout_constraintBottom_toBottomOf="@+id/pictures"
+            app:layout_constraintEnd_toEndOf="@+id/pictures"
+            app:layout_constraintStart_toStartOf="@+id/pictures" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{data.author}"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toBottomOf="@+id/author_label_bar"
+            app:layout_constraintStart_toStartOf="@+id/author_label_bar"
+            app:layout_constraintTop_toTopOf="@id/author_label_bar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
