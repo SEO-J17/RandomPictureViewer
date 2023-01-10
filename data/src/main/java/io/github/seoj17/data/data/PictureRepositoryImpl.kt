@@ -1,17 +1,21 @@
-package project.seo.pictureviewer.data
+package io.github.seoj17.data.data
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import project.seo.pictureviewer.data.database.PictureDao
-import project.seo.pictureviewer.data.database.PictureEntity
-import project.seo.pictureviewer.data.network.ResponseService
+import io.github.seoj17.data.data.database.PictureDao
+import io.github.seoj17.data.data.mapper.entityToDomainModel
+import io.github.seoj17.data.data.mapper.responseToDomainModel
+import io.github.seoj17.data.data.mapper.responseToEntity
+import io.github.seoj17.data.data.network.ResponseService
+import io.github.seoj17.domain.model.DomainModel
+import io.github.seoj17.domain.repository.PictureRepository
 import javax.inject.Inject
 
 class PictureRepositoryImpl @Inject constructor(
     private val remoteService: ResponseService,
     private val localService: PictureDao,
 ) : PictureRepository {
-    override fun fetchPictures(): Pager<Int, Picture> {
+    override fun fetchPictures(): Pager<Int, DomainModel> {
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,
@@ -23,21 +27,14 @@ class PictureRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getDetail(id: Int): Picture? {
+    override suspend fun getDetail(id: Int): DomainModel? {
         return localService.getPicture(id)?.let {
-            Picture(it)
+            entityToDomainModel(it)
         } ?: run {
-            remoteService.getPictures(id)?.let { data ->
-                Picture(data).also {
+            remoteService.getPictures(id)?.let { response ->
+                responseToDomainModel(response).also {
                     localService.insert(
-                        PictureEntity(
-                            id = data.id,
-                            author = data.author,
-                            width = data.width,
-                            height = data.height,
-                            url = data.url,
-                            downloadUrl = data.downloadUrl
-                        )
+                        responseToEntity(response)
                     )
                 }
             }
