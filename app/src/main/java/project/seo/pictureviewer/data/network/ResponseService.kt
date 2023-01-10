@@ -1,6 +1,6 @@
 package project.seo.pictureviewer.data.network
 
-import retrofit2.awaitResponse
+import retrofit2.await
 import javax.inject.Inject
 
 class ResponseService @Inject constructor(
@@ -8,10 +8,10 @@ class ResponseService @Inject constructor(
 ) {
     suspend fun getPictures(page: Int, limit: Int): List<PictureResponse> {
         return runCatching {
-            responseApi.getPicture(page, limit).awaitResponse()
+            responseApi.getPicture(page, limit).await()
         }.fold(
-            onSuccess = {
-                it.body().orEmpty()
+            onSuccess = { response ->
+                response
             },
             onFailure = {
                 emptyList()
@@ -21,10 +21,10 @@ class ResponseService @Inject constructor(
 
     suspend fun getPictures(id: Int): PictureResponse? {
         return runCatching {
-            responseApi.getPicture(id).awaitResponse()
+            responseApi.getPicture(id).await()
         }.fold(
-            onSuccess = {
-                it.body()
+            onSuccess = { response ->
+                response
             },
             onFailure = {
                 null
