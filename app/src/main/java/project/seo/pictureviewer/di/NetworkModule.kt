@@ -7,11 +7,21 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import project.seo.pictureviewer.data.network.PicturesAPI
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import javax.inject.Named
+import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class BaseUrl
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class TimeOutPolicy
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -19,14 +29,14 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    @Named("connectTimeoutPolicy")
+    @TimeOutPolicy
     fun provideConnectTimeoutPolicy(): Long {
         return 10_000L
     }
 
     @Singleton
     @Provides
-    @Named("baseUrl")
+    @BaseUrl
     fun provideBaseUrl(): String {
         return "https://picsum.photos"
     }
@@ -34,10 +44,18 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideMoshi(): Moshi {
-        return Moshi
-            .Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
+        return Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        @TimeOutPolicy connectTimeoutPolicy: Long,
+    ): OkHttpClient {
+        return OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).connectTimeout(
+            connectTimeoutPolicy, TimeUnit.MILLISECONDS
+        ).build()
     }
 
     @Singleton
@@ -45,14 +63,10 @@ object NetworkModule {
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
         moshi: Moshi,
-        @Named("baseUrl") url: String,
+        @BaseUrl url: String,
     ): Retrofit {
-        return Retrofit
-            .Builder()
-            .baseUrl(url)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .client(okHttpClient)
-            .build()
+        return Retrofit.Builder().baseUrl(url)
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient).build()
     }
 
     @Singleton
@@ -60,5 +74,4 @@ object NetworkModule {
     fun provideService(retrofit: Retrofit): PicturesAPI {
         return retrofit.create(PicturesAPI::class.java)
     }
-
 }
