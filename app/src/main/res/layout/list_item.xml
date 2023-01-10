@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="project.seo.pictureviewer.data.Picture" />
+            type="io.github.seoj17.domain.model.DomainModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

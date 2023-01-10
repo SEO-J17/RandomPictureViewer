@@ -2,11 +2,11 @@ package project.seo.pictureviewer.ui.main
 
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import project.seo.pictureviewer.data.Picture
+import io.github.seoj17.domain.model.DomainModel
 
 class MainListAdapter(
     private val itemClickListener: (Int) -> Unit,
-) : PagingDataAdapter<Picture, MainListViewHolder>(Picture.diffUtil) {
+) : PagingDataAdapter<DomainModel, MainListViewHolder>(DomainModel.diffUtil) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

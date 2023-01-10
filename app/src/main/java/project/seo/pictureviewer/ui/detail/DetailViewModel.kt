@@ -6,22 +6,22 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.seoj17.domain.model.DomainModel
+import io.github.seoj17.domain.usecase.GetDetailUseCase
 import kotlinx.coroutines.launch
-import project.seo.pictureviewer.data.Picture
-import project.seo.pictureviewer.data.PictureRepository
 import project.seo.pictureviewer.utils.Event
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val repository: PictureRepository,
+    private val getDetailUseCase: GetDetailUseCase
 ) : ViewModel() {
 
     private var pictureId = DetailFragmentArgs.fromSavedStateHandle(savedStateHandle).pictureId
 
-    private val _pictureDetail = MutableLiveData<Picture>()
-    val pictureDetail: LiveData<Picture> = _pictureDetail
+    private val _pictureDetail = MutableLiveData<DomainModel?>()
+    val pictureDetail: LiveData<DomainModel?> = _pictureDetail
 
     private val _previousPreview = MutableLiveData<String?>()
     val previousPreview: LiveData<String?> = _previousPreview
@@ -37,18 +37,18 @@ class DetailViewModel @Inject constructor(
 
     fun fetchDetail() {
         viewModelScope.launch {
-            _pictureDetail.postValue(repository.getDetail(pictureId))
+            _pictureDetail.postValue(getDetailUseCase(pictureId))
             setPreviousPreview(pictureId - 1)
             setNextPreview(pictureId + 1)
         }
     }
 
     private suspend fun setPreviousPreview(pictureId: Int) {
-        _previousPreview.postValue(repository.getDetail(pictureId)?.downloadUrl)
+        _previousPreview.postValue(getDetailUseCase(pictureId)?.downloadUrl)
     }
 
     private suspend fun setNextPreview(pictureId: Int) {
-        _nextPreview.postValue(repository.getDetail(pictureId)?.downloadUrl)
+        _nextPreview.postValue(getDetailUseCase(pictureId)?.downloadUrl)
     }
 
     private fun updateId(id: Int) {

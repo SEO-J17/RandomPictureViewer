@@ -7,8 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import project.seo.pictureviewer.data.database.PictureDao
-import project.seo.pictureviewer.data.database.PictureDatabase
+import io.github.seoj17.data.data.database.PictureDao
+import io.github.seoj17.data.data.database.PictureDatabase
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)

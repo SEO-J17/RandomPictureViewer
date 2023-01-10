@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.data.database
+package io.github.seoj17.domain.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

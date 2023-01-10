@@ -74,4 +74,5 @@ object NetworkModule {
     fun provideService(retrofit: Retrofit): PicturesAPI {
         return retrofit.create(PicturesAPI::class.java)
     }
+
 }
