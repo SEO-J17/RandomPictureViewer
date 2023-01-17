@@ -2,18 +2,26 @@ package project.seo.pictureviewer.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import project.seo.pictureviewer.data.PictureData
-import project.seo.pictureviewer.network.RetrofitService
-import retrofit2.HttpException
+import project.seo.pictureviewer.data.Picture
+import project.seo.pictureviewer.data.PictureRepository
+import project.seo.pictureviewer.utils.Event
+import javax.inject.Inject
 
-class DetailViewModel : ViewModel() {
-    private val _pictureDetail = MutableLiveData<PictureData>()
-    val pictureDetail: LiveData<PictureData> = _pictureDetail
+@HiltViewModel
+class DetailViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    private val repository: PictureRepository,
+) : ViewModel() {
+
+    private var pictureId = DetailFragmentArgs.fromSavedStateHandle(savedStateHandle).pictureId
+
+    private val _pictureDetail = MutableLiveData<Picture>()
+    val pictureDetail: LiveData<Picture> = _pictureDetail
 
     private val _previousPreview = MutableLiveData<String?>()
     val previousPreview: LiveData<String?> = _previousPreview
@@ -24,44 +32,31 @@ class DetailViewModel : ViewModel() {
     private val _error = MutableLiveData<Event<String>>()
     val error: LiveData<Event<String>> = _error
 
+    private val _webPage = MutableLiveData<Event<Boolean>>()
+    val webPage: LiveData<Event<Boolean>> = _webPage
+
     fun fetchDetail() {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                _pictureDetail.postValue(RetrofitService.getPictureData(PICTURE_ID))
-            }
-            setPreviousPreview(PICTURE_ID - 1)
-            setNextPreview(PICTURE_ID + 1)
+            _pictureDetail.postValue(repository.getDetail(pictureId))
+            setPreviousPreview(pictureId - 1)
+            setNextPreview(pictureId + 1)
         }
     }
 
     private suspend fun setPreviousPreview(pictureId: Int) {
-        try {
-            withContext(Dispatchers.IO) {
-                _previousPreview.postValue(RetrofitService.getPictureData(pictureId).downloadUrl)
-            }
-        } catch (e: HttpException) {
-            _previousPreview.value = null
-        }
+        _previousPreview.postValue(repository.getDetail(pictureId)?.downloadUrl)
     }
 
     private suspend fun setNextPreview(pictureId: Int) {
-        try {
-            withContext(Dispatchers.IO) {
-                _nextPreview.postValue(RetrofitService.getPictureData(pictureId).downloadUrl)
-            }
-        } catch (e: HttpException) {
-            _nextPreview.value = null
-        }
+        _nextPreview.postValue(repository.getDetail(pictureId)?.downloadUrl)
     }
 
-    fun updateId(pictureId: Int) {
-        with(RetrofitService) {
-            if (pictureId >= startPage - 1 && pictureId < endPage) {
-                PICTURE_ID = pictureId
-                isValid(true)
-            } else {
-                isValid(false)
-            }
+    private fun updateId(id: Int) {
+        if (id >= 0) {
+            pictureId = id
+            isValid(true)
+        } else {
+            isValid(false)
         }
     }
 
@@ -73,9 +68,15 @@ class DetailViewModel : ViewModel() {
         }
     }
 
-    fun getId(): Int = PICTURE_ID
+    fun clickWebPage() {
+        _webPage.value = Event(true)
+    }
 
-    companion object {
-        private var PICTURE_ID = 0
+    fun previousPage() {
+        updateId(pictureId - 1)
+    }
+
+    fun nextPage() {
+        updateId(pictureId + 1)
     }
 }

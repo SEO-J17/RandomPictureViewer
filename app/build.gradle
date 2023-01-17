@@ -1,9 +1,9 @@
-import org.gradle.util.internal.SimpleMapInterner
-
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.dagger.hilt.android'
     id 'org.jetbrains.kotlin.kapt'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -13,18 +13,40 @@ android {
         applicationId "project.seo.pictureviewer"
         minSdk 26
         targetSdk 32
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            minifyEnabled false
+            debuggable true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "version"
+    productFlavors {
+        //개발용
+        dev {
+            dimension "version"
+            applicationIdSuffix = ".dev"
+            versionCode 1
+            versionName "1.0"
+            versionNameSuffix "-dev"
+        }
+        //실제 배포용
+        prod {
+            dimension "version"
+            applicationIdSuffix = ".prod"
+            versionCode 2
+            versionName "1.0.1"
+            versionNameSuffix "-prod"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -33,6 +55,7 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
     }
     buildFeatures {
+        viewBinding = true
         dataBinding = true
     }
 }
@@ -49,10 +72,14 @@ dependencies {
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    // Retrofit with Moshi Converter
+    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.14.0'
+
     //okhttp
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     //Coil
     implementation 'io.coil-kt:coil:2.2.2'
     // Glide
@@ -64,4 +91,22 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     // fragment
     implementation "androidx.fragment:fragment-ktx:1.5.4"
+    // Room
+    implementation 'androidx.room:room-runtime:2.4.3'
+    implementation 'androidx.room:room-ktx:2.4.3'
+    kapt 'androidx.room:room-compiler:2.4.3'
+    // Paging
+    implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
+    // Hilt
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
+    // Timber
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
+}
+// Allow references to generated code
+kapt {
+    correctErrorTypes true
 }
