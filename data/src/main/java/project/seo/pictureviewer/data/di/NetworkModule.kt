@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.di
+package project.seo.pictureviewer.data.di
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
