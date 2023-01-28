@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.di
+package project.seo.pictureviewer.data.di
 
 import dagger.Module
 import dagger.Provides
