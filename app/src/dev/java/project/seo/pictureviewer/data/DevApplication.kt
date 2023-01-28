@@ -1,4 +1,4 @@
-package project.seo.pictureviewer.dev
+package project.seo.pictureviewer.data
 
 import project.seo.pictureviewer.MyApplication
 import timber.log.Timber

@@ -2,10 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="project.seo.pictureviewer">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
-        android:name=".dev.DevApplication"
+        android:name=".data.DevApplication"
         tools:replace="android:name" />
 
 </manifest>
