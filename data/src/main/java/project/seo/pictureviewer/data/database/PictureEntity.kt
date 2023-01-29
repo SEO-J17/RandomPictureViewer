@@ -49,5 +49,17 @@ data class PictureEntity(
                 downloadUrl = response.downloadUrl,
             )
         }
+        operator fun invoke(list: List<PictureResponse>): List<PictureEntity> {
+            return list.map { response ->
+                PictureEntity(
+                    id = response.id,
+                    author = response.author,
+                    width = response.width,
+                    height = response.height,
+                    url = response.url,
+                    downloadUrl = response.downloadUrl,
+                )
+            }
+        }
     }
 }
