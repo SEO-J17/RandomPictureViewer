@@ -27,14 +27,10 @@ android {
         //개발용
         dev {
             dimension "version"
-            versionCode 1
-            versionName "1.0"
         }
         //실제 배포용
         prod {
             dimension "version"
-            versionCode 2
-            versionName "1.0.1"
         }
     }
     compileOptions {

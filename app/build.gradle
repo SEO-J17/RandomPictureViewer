@@ -31,18 +31,10 @@ android {
         //개발용
         dev {
             dimension "version"
-            applicationIdSuffix = ".dev"
-            versionCode 1
-            versionName "1.0"
-            versionNameSuffix "-dev"
         }
         //실제 배포용
         prod {
             dimension "version"
-            applicationIdSuffix = ".prod"
-            versionCode 2
-            versionName "1.0.1"
-            versionNameSuffix "-prod"
         }
     }
 
