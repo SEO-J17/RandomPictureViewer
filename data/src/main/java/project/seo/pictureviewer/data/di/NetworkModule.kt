@@ -44,7 +44,10 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideMoshi(): Moshi {
-        return Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+        return Moshi
+            .Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
     }
 
     @Singleton
@@ -53,9 +56,14 @@ object NetworkModule {
         httpLoggingInterceptor: HttpLoggingInterceptor,
         @TimeOutPolicy connectTimeoutPolicy: Long,
     ): OkHttpClient {
-        return OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).connectTimeout(
-            connectTimeoutPolicy, TimeUnit.MILLISECONDS
-        ).build()
+        return OkHttpClient
+            .Builder()
+            .addInterceptor(httpLoggingInterceptor)
+            .connectTimeout(
+                connectTimeoutPolicy,
+                TimeUnit.MILLISECONDS
+            )
+            .build()
     }
 
     @Singleton
@@ -65,8 +73,12 @@ object NetworkModule {
         moshi: Moshi,
         @BaseUrl url: String,
     ): Retrofit {
-        return Retrofit.Builder().baseUrl(url)
-            .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient).build()
+        return Retrofit
+            .Builder()
+            .baseUrl(url)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(okHttpClient)
+            .build()
     }
 
     @Singleton
