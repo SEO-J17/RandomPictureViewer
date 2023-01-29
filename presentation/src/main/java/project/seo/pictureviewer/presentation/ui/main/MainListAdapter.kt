@@ -2,7 +2,6 @@ package project.seo.pictureviewer.presentation.ui.main
 
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import project.seo.pictureviewer.data.model.DataPicture
 import project.seo.pictureviewer.presentation.model.Picture
 
 class MainListAdapter(

@@ -3,7 +3,7 @@ package project.seo.pictureviewer.presentation.model
 import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.recyclerview.widget.DiffUtil
-import project.seo.pictureviewer.data.model.DataPicture
+import project.seo.pictureviewer.domain.model.DomainPicture
 
 data class Picture(
     val id: Int,
@@ -30,7 +30,7 @@ data class Picture(
             }
         }
 
-        operator fun invoke(data: DataPicture): Picture {
+        operator fun invoke(data: DomainPicture): Picture {
             return Picture(
                 id = data.id,
                 author = data.author,
@@ -41,7 +41,7 @@ data class Picture(
             )
         }
 
-        operator fun invoke(pagingData: PagingData<DataPicture>): PagingData<Picture> {
+        operator fun invoke(pagingData: PagingData<DomainPicture>): PagingData<Picture> {
             return pagingData.map { data ->
                 Picture(
                     id = data.id,
