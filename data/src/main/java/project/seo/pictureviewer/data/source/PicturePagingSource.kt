@@ -21,11 +21,8 @@ class PicturePagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DataPicture> {
         val page = params.key ?: STARTING_PAGE
         val pictures = remoteService.getPictures(page, params.loadSize)
-        localService.insert(
-            pictures.map { response ->
-                PictureEntity(response)
-            }
-        )
+        localService.insert(PictureEntity(pictures))
+
         val offset = (page - 1) * params.loadSize
         val local = localService.getPicture(offset, params.loadSize)
         return LoadResult.Page(
