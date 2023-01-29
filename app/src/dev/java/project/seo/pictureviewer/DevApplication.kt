@@ -1,6 +1,5 @@
-package project.seo.pictureviewer.data
+package project.seo.pictureviewer
 
-import project.seo.pictureviewer.MyApplication
 import timber.log.Timber
 
 class DevApplication : MyApplication() {

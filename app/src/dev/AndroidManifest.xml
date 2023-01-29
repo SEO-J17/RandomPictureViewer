@@ -3,7 +3,7 @@
     package="project.seo.pictureviewer">
 
     <application
-        android:name=".data.DevApplication"
+        android:name=".DevApplication"
         tools:replace="android:name" />
 
 </manifest>
