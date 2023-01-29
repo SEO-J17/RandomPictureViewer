@@ -14,7 +14,7 @@ interface PictureDao {
     suspend fun insert(entity: PictureEntity)
 
     @Query("DELETE FROM pictures")
-    suspend fun delete()
+    suspend fun deleteAll()
 
     @Query("DELETE FROM pictures WHERE id = :id")
     suspend fun delete(id: Int)
