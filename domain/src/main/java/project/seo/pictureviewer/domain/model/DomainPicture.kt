@@ -26,14 +26,7 @@ data class DomainPicture(
 
         operator fun invoke(paging: PagingData<DataPicture>): PagingData<DomainPicture> {
             return paging.map { data ->
-                DomainPicture(
-                    id = data.id,
-                    author = data.author,
-                    width = data.width,
-                    height = data.height,
-                    url = data.url,
-                    downloadUrl = data.downloadUrl,
-                )
+                invoke(data)
             }
         }
     }
