@@ -10,8 +10,10 @@ class GetDetailUseCase @Inject constructor(
     private val repository: PictureRepository
 ) {
     suspend operator fun invoke(id: Int): DomainPicture? {
-        return repository.getDetail(id)?.let {
-            DomainPicture(it)
-        }
+        return repository
+            .getDetail(id)
+            ?.let {
+                DomainPicture(it)
+            }
     }
 }
