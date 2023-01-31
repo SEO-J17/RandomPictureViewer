@@ -12,19 +12,6 @@ data class DataPicture(
     val downloadUrl: String,
 ) {
     companion object {
-        operator fun invoke(entity: List<PictureEntity>): List<DataPicture> {
-            return entity.map {
-                DataPicture(
-                    id = it.id,
-                    author = it.author,
-                    width = it.width,
-                    height = it.height,
-                    url = it.url,
-                    downloadUrl = it.downloadUrl
-                )
-            }
-        }
-
         operator fun invoke(entity: PictureEntity): DataPicture {
             return DataPicture(
                 id = entity.id,
@@ -36,6 +23,13 @@ data class DataPicture(
             )
         }
 
+        @JvmName("entityToList")
+        operator fun invoke(entity: List<PictureEntity>): List<DataPicture> {
+            return entity.map {
+                invoke(it)
+            }
+        }
+
         operator fun invoke(response: PictureResponse): DataPicture {
             return DataPicture(
                 id = response.id,
@@ -45,6 +39,13 @@ data class DataPicture(
                 url = response.url,
                 downloadUrl = response.downloadUrl,
             )
+        }
+
+        @JvmName("ResponseToList")
+        operator fun invoke(response: List<PictureResponse>): List<DataPicture> {
+            return response.map {
+                invoke(it)
+            }
         }
     }
 }
