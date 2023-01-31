@@ -18,9 +18,9 @@ class DetailViewModel @Inject constructor(
     private val getDetailUseCase: GetDetailUseCase,
 ) : ViewModel() {
 
-    private var pictureId = DetailFragmentArgs.fromSavedStateHandle(
-        savedStateHandle
-    ).pictureId
+    private var pictureId = DetailFragmentArgs
+        .fromSavedStateHandle(savedStateHandle)
+        .pictureId
 
     private val _pictureDetail = MutableLiveData<Picture>()
     val pictureDetail: LiveData<Picture> = _pictureDetail
