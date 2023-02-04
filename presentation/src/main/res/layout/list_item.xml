@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="project.seo.pictureviewer.presentation.model.Picture" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/pictures"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/round_image"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:imgUrl="@{data.downloadUrl}" />
+
+        <View
+            android:id="@+id/author_label_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/author_label_round"
+            app:layout_constraintBottom_toBottomOf="@+id/pictures"
+            app:layout_constraintEnd_toEndOf="@+id/pictures"
+            app:layout_constraintStart_toStartOf="@+id/pictures" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{data.author}"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toBottomOf="@+id/author_label_bar"
+            app:layout_constraintStart_toStartOf="@+id/author_label_bar"
+            app:layout_constraintTop_toTopOf="@id/author_label_bar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

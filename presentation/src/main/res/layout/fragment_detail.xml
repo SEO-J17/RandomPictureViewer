@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="detail_vm"
+            type="project.seo.pictureviewer.presentation.ui.detail.DetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/detailImage"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:imgUrl="@{detail_vm.pictureDetail.downloadUrl}" />
+
+        <TextView
+            android:id="@+id/id_label"
+            style="@style/MainTitleStyle"
+            android:text="@string/textId"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailImage" />
+
+        <TextView
+            android:id="@+id/idValue"
+            style="@style/MainValueStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{String.valueOf(detail_vm.pictureDetail.id)}"
+            app:layout_constraintBottom_toBottomOf="@+id/id_label"
+            app:layout_constraintStart_toEndOf="@+id/id_label"
+            app:layout_constraintTop_toTopOf="@+id/id_label"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/author_label"
+            style="@style/MainTitleStyle"
+            android:text="@string/textAuthor"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_label" />
+
+        <TextView
+            android:id="@+id/authorValue"
+            style="@style/MainValueStyle"
+            android:layout_marginStart="10dp"
+            android:text="@{detail_vm.pictureDetail.author}"
+            app:layout_constraintBottom_toBottomOf="@+id/author_label"
+            app:layout_constraintStart_toEndOf="@id/author_label"
+            app:layout_constraintTop_toTopOf="@+id/author_label"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/width_label"
+            style="@style/MainTitleStyle"
+            android:text="@string/textWidth"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/author_label" />
+
+        <TextView
+            android:id="@+id/widthValue"
+            style="@style/MainValueStyle"
+            android:layout_marginStart="10dp"
+            android:text="@{detail_vm.pictureDetail.width}"
+            app:layout_constraintBottom_toBottomOf="@+id/width_label"
+            app:layout_constraintStart_toEndOf="@id/width_label"
+            app:layout_constraintTop_toTopOf="@+id/width_label"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/height_label"
+            style="@style/MainTitleStyle"
+            android:text="@string/textHeight"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/width_label" />
+
+        <TextView
+            android:id="@+id/heightValue"
+            style="@style/MainValueStyle"
+            android:layout_marginStart="10dp"
+            android:text="@{detail_vm.pictureDetail.height}"
+            app:layout_constraintBottom_toBottomOf="@+id/height_label"
+            app:layout_constraintStart_toEndOf="@id/height_label"
+            app:layout_constraintTop_toTopOf="@+id/height_label"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/url_label"
+            style="@style/MainTitleStyle"
+            android:text="@string/textUrl"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/height_label" />
+
+        <TextView
+            android:id="@+id/urlValue"
+            style="@style/MainValueStyle"
+            android:layout_marginStart="10dp"
+            android:onClick="@{() -> detail_vm.clickWebPage()}"
+            android:text="@{detail_vm.pictureDetail.url}"
+            app:layout_constraintBottom_toBottomOf="@+id/url_label"
+            app:layout_constraintStart_toEndOf="@+id/url_label"
+            app:layout_constraintTop_toTopOf="@+id/url_label"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/download_label"
+            style="@style/MainTitleStyle"
+            android:text="@string/textDownUrl"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/url_label" />
+
+        <TextView
+            android:id="@+id/downloadValue"
+            style="@style/MainValueStyle"
+            android:layout_marginStart="10dp"
+            android:text="@{detail_vm.pictureDetail.downloadUrl}"
+            app:layout_constraintBottom_toBottomOf="@id/download_label"
+            app:layout_constraintStart_toEndOf="@id/download_label"
+            app:layout_constraintTop_toTopOf="@id/download_label"
+            tools:text="0" />
+
+        <ImageView
+            android:id="@+id/previousPicture"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_marginTop="8dp"
+            android:onClick="@{() -> detail_vm.previousPage()}"
+            app:layout_constraintEnd_toStartOf="@+id/currentPicture"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/download_label"
+            bind:imgUrl="@{detail_vm.previousPreview}" />
+
+        <ImageView
+            android:id="@+id/currentPicture"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="@+id/previousPicture"
+            app:layout_constraintEnd_toStartOf="@+id/nextPicture"
+            app:layout_constraintStart_toEndOf="@+id/previousPicture"
+            app:layout_constraintTop_toTopOf="@+id/previousPicture"
+            bind:imgUrl="@{detail_vm.pictureDetail.downloadUrl}" />
+
+        <ImageView
+            android:id="@+id/nextPicture"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:onClick="@{() -> detail_vm.nextPage()}"
+            app:layout_constraintBottom_toBottomOf="@+id/currentPicture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/currentPicture"
+            app:layout_constraintTop_toTopOf="@+id/currentPicture"
+            bind:imgUrl="@{detail_vm.nextPreview}" />
+
+        <ImageView
+            android:id="@+id/backPage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:onClick="@{() -> detail_vm.previousPage()}"
+            android:src="@drawable/back_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/nextPage"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/previousPicture" />
+
+        <ImageView
+            android:id="@+id/nextPage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="@{() -> detail_vm.nextPage()}"
+            android:src="@drawable/next_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/backPage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/backPage"
+            app:layout_constraintTop_toTopOf="@+id/backPage" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
