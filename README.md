@@ -13,7 +13,7 @@
 + Paging을 이용하여 데이터를 효율적으로 가져오도록 구성.
 + Room을 이용하여 캐시 기능을 구현. 빠른 응답이 가능하도록 구성.
 + 리사이클러 뷰에 DiffUtil을 적용해 효율적인 데이터 업데이트를 하도록 구현.
-+ MVVM패턴과 DI, Repository 패턴을 이용해 의존성을 낮추고 응집도를 높임
++ MVVM패턴과 DI,Google Recomanded Architecture를 이용해 의존성을 낮추고 응집도를 높임
 
 ## 🛠Tech & Library
 
